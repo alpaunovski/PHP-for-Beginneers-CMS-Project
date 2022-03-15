@@ -23,6 +23,25 @@
 
  */
 
+function two_numbers(){
+	$num1 = 530;
+	$num2 = 430;
+	$sum = $num1 + $num2;
+
+	return $sum;
+}
+
+$the_sum = two_numbers() . " // Two numbers <br>";
+
+echo $the_sum;
+
+two_numbers();
+
+ function sum_two_numbers($num1, $num2){
+	 echo $num1 + $num2 . " // The parameter function <br>";
+ }
+
+ sum_two_numbers(64, 46);
 	
 ?>
 

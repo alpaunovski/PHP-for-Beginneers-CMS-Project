@@ -25,7 +25,16 @@
 
  */
 
-	
+	echo pow(2, 7) . "<br>";
+
+	$string = "This is a string";
+
+	echo strtoupper($string) . "<br>";
+
+	$list = [213, 123, 23, 2342, 555];
+
+	echo max($list);
+
 ?>
 
 
