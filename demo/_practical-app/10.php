@@ -28,6 +28,29 @@ Step 6: Call the method ShowAll
 
 		
 	*/
+
+	class Dog {
+		var $name = 'Fluffy';
+		var $breed = 'chihuahua';
+		var $fur = 'black and white';
+		var $eyes = 'big blue eyes';
+
+		function ShowAll(){
+			echo "Name: " . $this->name;
+			echo '<br>';
+			echo 'breed: ' . $this->breed;
+			echo '<br>';
+			echo 'fur: ' . $this->fur;
+			echo '<br>';
+			echo 'eyes: ' . $this->eyes;
+			echo '<br>';
+
+		}
+	}
+
+	$pitbull = new Dog();
+
+	$pitbull->ShowAll();
 	
 	?>
 

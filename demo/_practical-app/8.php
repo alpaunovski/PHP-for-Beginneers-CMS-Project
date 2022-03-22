@@ -26,6 +26,17 @@
 		Step 4 - echo the variable
 
 	*/
+
+	$password = "myCrazyText";
+
+	$hashFormat = "$2y$10$";
+    $salt = "iusesomecrazystrings22";
+
+    $hash_and_salt = $hashFormat . $salt;
+
+	$password = crypt($password, $hash_and_salt);
+
+	echo $password;
 	
 	?>
 
