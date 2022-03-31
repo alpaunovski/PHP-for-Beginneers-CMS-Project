@@ -1,5 +1,13 @@
 <?php
 
+function confirm($result){
+    global $connection;
+    if(!$result){
+        die("QUERY FAILED" . mysqli_error($connection));
+    }
+
+}
+
 function insert_categories (){
 
     global $connection;
@@ -35,6 +43,7 @@ function findAllCategories(){
     while ($row = mysqli_fetch_assoc($select_categories)){
         $cat_id = $row["cat_id"];
         $cat_title = $row["cat_title"];
+        
         echo "<tr>";
 
         
