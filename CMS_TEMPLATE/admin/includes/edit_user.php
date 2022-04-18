@@ -4,8 +4,22 @@ if(isset($_GET["edit_user"])){
 
 $the_user_id = $_GET["edit_user"];
 
+$query = "SELECT * FROM users WHERE user_id = $the_user_id ";
+                                    $select_users_query = mysqli_query($connection, $query);
+
+                                    while ($row = mysqli_fetch_assoc($select_users_query)){
+                                        
+                                        $user_id = $row["user_id"];
+                                        $username = $row["username"];
+                                        $user_password = $row["user_password"];
+                                        $user_firstname = $row["user_firstname"];
+                                        $user_lastname = $row["user_lastname"];
+                                        $user_email = $row["user_email"];
+                                        $user_image = $row["user_image"];
+                                        $user_role = $row["user_role"];
 
 
+}
 }
 if(isset($_POST['edit_user'])){
     // $user_id = $_POST["user_id"];
@@ -24,12 +38,17 @@ if(isset($_POST['edit_user'])){
 
     // move_uploaded_file($post_image_temp, "../images/$post_image");
 
-    $query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) ";
-    $query .= "VALUES('{$user_firstname}', '{$user_lastname}', '{$user_role}', '{$username}', '{$user_email}', '{$user_password}' ) ";
+    $query = "UPDATE users SET ";
+    $query .="user_firstname = '{$user_firstname}', ";
+    $query .="user_lastname = '{$user_lastname}', ";
+    $query .="user_role = '{$user_role}', ";
+    $query .="username = '{$username}', ";
+    $query .="user_email = '{$user_email}', ";
+    $query .="user_password = '{$user_password}' ";
+    $query .= "WHERE user_id = {$the_user_id} ";
 
-    $create_user_query = mysqli_query($connection, $query);
-    
-    confirm($create_user_query);
+    $edit_user_query=mysqli_query($connection, $query);
+    confirm($edit_user_query);
 }
 
 ?>
@@ -38,12 +57,12 @@ if(isset($_POST['edit_user'])){
 
 <div class="form-group">
     <label for="post_author">First Name</label>
-    <input type="text" class="form-control" name="user_firstname">
+    <input type="text" class="form-control" value="<?php echo $user_firstname ?>" name="user_firstname">
 </div>
 
 <div class="form-group">
     <label for="post_status">Last Name</label>
-    <input type="text" class="form-control" name="user_lastname">
+    <input type="text" class="form-control" value="<?php echo $user_lastname ?>" name="user_lastname">
 </div>
 
 
@@ -52,9 +71,20 @@ if(isset($_POST['edit_user'])){
     <!-- <input value="<?php echo $post_category; ?>" type="text" class="form-control" name="post_category_id"> -->
 
     <select name="user_role" id="user_role">
-    <option value="subscriber">Select Options</option>
-    <option value="admin">Admin</option>
-    <option value="subscriber">Subscriber</option>
+    <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
+
+    <?php 
+        if($user_role == 'admin'){
+           echo " <option value='subscriber'>subscriber</option>";
+        } else {
+            echo "<option value='admin'>admin</option>";
+        }
+
+
+    ?>
+    
+    
+    
 
     <?php 
     
@@ -86,17 +116,17 @@ if(isset($_POST['edit_user'])){
 
 <div class="form-group">
     <label for="post_tags">Username</label>
-    <input type="text" class="form-control" name="username">
+    <input type="text" class="form-control" value="<?php echo $username; ?>" name="username">
 </div>
 
 <div class="form-group">
     <label for="post_content">Email</label>
-<input type="email" class="form-control" name="user_email">
+<input type="email" class="form-control" value="<?php echo $user_email; ?>" name="user_email">
 </div>
 
 <div class="form-group">
     <label for="post_content">Password</label>
-<input type="password" class="form-control" name="user_password">
+<input type="password" class="form-control" value="<?php echo $user_password; ?>" name="user_password">
 </div>
 
 <div class="form-group">
