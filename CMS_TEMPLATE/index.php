@@ -28,10 +28,7 @@
                     $post_content = substr($row["post_content"], 0,100);
                     $post_status = $row["post_status"];
 
-                    if($post_status !== "Published" ){
-                        echo "<h1> NO POST SORRY</h1>";
-                    }else{
-
+                    if($post_status == "Published" ){
                     
             ?>
                     <h1 class="page-header">
