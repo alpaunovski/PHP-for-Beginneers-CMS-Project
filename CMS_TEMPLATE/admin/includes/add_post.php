@@ -16,12 +16,17 @@ if(isset($_POST['create_post'])){
 
     move_uploaded_file($post_image_temp, "../images/$post_image");
 
+
     $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
-    $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}' ) ";
+    $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', 0, '{$post_status}' ) ";
 
     $create_post_query = mysqli_query($connection, $query);
     
     confirm($create_post_query);
+
+    $the_post_id = mysqli_insert_id($connection);
+
+    echo "<p class='bg-success'>Post added. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php?source=add_post'>Add Another Post</a></p>";
 }
 
 ?>
@@ -65,10 +70,20 @@ if(isset($_POST['create_post'])){
     <input type="text" class="form-control" name="author">
 </div>
 
+
+
 <div class="form-group">
-    <label for="post_status">Post Status</label>
-    <input type="text" class="form-control" name="post_status">
+
+    <select name="post_status">
+        <option value="draft">Post Status</option>
+        <option value="draft">Draft</option>
+        <option value="published">Published</option>
+
+    </select>
+
 </div>
+
+
 
 <div class="form-group">
     <label for="image">Post Image</label>
