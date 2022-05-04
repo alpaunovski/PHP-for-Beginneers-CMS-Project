@@ -25,6 +25,11 @@ if(!$select_rand_salt_query){
 
 $row = mysqli_fetch_array($select_rand_salt_query);
 
+$salt = $row['randSalt'];
+
+
+$password = crypt($password, $salt);
+
 $query = "INSERT INTO users (username, user_email, user_password, user_role) ";
 $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber' )";
 $register_user_query = mysqli_query($connection, $query);
@@ -33,6 +38,8 @@ if(!$register_user_query) {
 }
 
 $message = "Your registration has been submitted";
+
+echo $password;
 
 } else {
     $message = "Fields cannot be empty";
