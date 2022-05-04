@@ -9,6 +9,8 @@ $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 
+if(!empty($username) && !empty($password) && !empty($email)){
+
 $username = mysqli_real_escape_string($connection, $username);
 $email = mysqli_real_escape_string($connection, $email);
 $password = mysqli_real_escape_string($connection, $password);
@@ -30,7 +32,17 @@ if(!$register_user_query) {
     die("QUERY FAILED" . mysqli_error($connection)) . ' ' . mysqli_errno($connection);
 }
 
+$message = "Your registration has been submitted";
 
+} else {
+    $message = "Fields cannot be empty";
+}
+
+
+
+
+} else {
+    $message="";
 }
  
  
@@ -49,6 +61,12 @@ if(!$register_user_query) {
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="form-wrap">
+
+                <h6 class="text-center">
+
+                <?php echo $message; ?>
+
+                </h6>
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
