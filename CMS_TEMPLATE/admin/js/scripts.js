@@ -20,10 +20,14 @@ $(document).ready(function() {
 
   });
 
-  var div_box = "<div id='load-screen'><div id ='loading'></div></div>";
+  ///////////Loader
 
-  $("body").prepend(div_box);
+  // var div_box = "<div id='load-screen'><div id ='loading'></div></div>";
 
-  $('#load-screen').delay(700).fadeOut(600, function(){
-    $(this).remove;
-  })
+  // $("body").prepend(div_box);
+
+  // $('#load-screen').delay(700).fadeOut(600, function(){
+  //   $(this).remove;
+  // })
+
+  ////////End Loader
