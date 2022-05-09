@@ -18,7 +18,7 @@
 
             if(isset($_GET["p_id"])){
                 $the_post_id = $_GET["p_id"];
-
+            if($_SERVER['REQUEST_METHOD'] !== 'POST'){
                 $view_query = "UPDATE posts SET post_views_count = post_views_count +1 WHERE post_id = $the_post_id ";
 
                 $send_query = mysqli_query($connection, $view_query);
@@ -26,6 +26,8 @@
                 if(!$send_query) {
                     die("Query failed " . mysqli_error($connection));
                 }
+
+            }
 
                 $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
                 $select_all_posts_query = mysqli_query($connection, $query);
@@ -74,7 +76,7 @@
                 <!-- Blog Comments -->
 
                 <?php 
-                
+                if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 if(isset($_POST["create_comment"])){
                     $the_post_id = $_GET["p_id"];
 
@@ -104,13 +106,17 @@
                     
 
                    
-                }
+                } //End of if isset check
+
+                header("Location: /cms/post.php?p_id=$the_post_id");
+            }
 
                 ?>
 
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
+                    <input type="hidden" value="<?php isset($the_post_id) ?? null ?>" >
                     <form action="" method="post" role="form">
                     <div class="form-group">
                         <label for="comment_author">Name:</label>
