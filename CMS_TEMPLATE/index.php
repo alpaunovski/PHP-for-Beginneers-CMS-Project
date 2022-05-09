@@ -15,8 +15,12 @@
             <div class="col-md-8">
 
             <?php 
+            $per_page = "5";
 
             if(isset($_GET['page'])){
+
+                
+
                $page = $_GET['page'];
             } else {
                 $page="";
@@ -35,7 +39,7 @@
             $count = ceil($count / 5);
 
 
-                $query = "SELECT * FROM posts LIMIT $page_1, 5 ";
+                $query = "SELECT * FROM posts LIMIT $page_1, $per_page ";
                 $select_all_posts_query = mysqli_query($connection, $query);
 
                 while ($row = mysqli_fetch_assoc($select_all_posts_query)){
@@ -91,9 +95,14 @@
 
 <?php 
 
-for($i = 1; $i<$count; $i++){
+for($i = 1; $i <= $count; $i++){
+
+    if($i == $page){
+        echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+    } else {
 
     echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+    }
 }
 
 ?>
