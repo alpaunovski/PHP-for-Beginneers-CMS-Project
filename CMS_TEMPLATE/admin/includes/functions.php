@@ -9,7 +9,17 @@ function confirm($result){
 }
 
 function users_online() {
+
+    if(isset($_GET['onlineusers'])){
+       
+    
     global $connection;
+
+    if(!$connection){
+        session_start();
+        include("../../includes/db.php"); 
+
+    
     $session = session_id();
     $time = time();
     $time_out_in_seconds = 60;
@@ -27,8 +37,13 @@ function users_online() {
 
     $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$time_out' ");
 
-    return $count_user = mysqli_num_rows($users_online_query);
+    echo $count_user = mysqli_num_rows($users_online_query);
+
+    }
+} //Get request isset();
 }
+
+users_online();
 
 function insert_categories (){
 

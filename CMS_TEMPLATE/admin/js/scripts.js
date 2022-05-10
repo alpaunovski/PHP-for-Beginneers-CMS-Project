@@ -34,9 +34,12 @@ $(document).ready(function() {
 
   function loadUsersOnline() {
 
-    $.get("functions.php?onlineusers=result", function(data){
+    $.get("includes/functions.php?onlineusers=result", function(data){
       $(".usersonline").text(data);
     });
   }
 
-  loadUsersOnline();
+  setInterval(function(){
+    loadUsersOnline();
+  }, 500);
+
