@@ -20,7 +20,7 @@ $query = "SELECT * FROM users WHERE user_id = $the_user_id ";
 
 
 }
-}
+
 if(isset($_POST['edit_user'])){
     // $user_id = $_POST["user_id"];
     $user_firstname = $_POST["user_firstname"];
@@ -39,7 +39,7 @@ if(isset($_POST['edit_user'])){
 
     if(!empty($user_password)) {
         $query_password = "SELECT user_password FROM users WHERE user_id = $the_user_id ";
-        $get_user_query = mysqli_query($connection, $query);
+        $get_user_query = mysqli_query($connection, $query_password);
         
         confirm($get_user_query);
         
@@ -70,6 +70,10 @@ if(isset($_POST['edit_user'])){
     
     
  
+}
+
+} else {
+    header("Location: index.php");
 }
 
 ?>
@@ -147,7 +151,7 @@ if(isset($_POST['edit_user'])){
 
 <div class="form-group">
     <label for="post_content">Password</label>
-<input type="password" class="form-control" value="<?php echo $user_password; ?>" name="user_password">
+<input autocomplete="off" type="password" class="form-control" name="user_password">
 </div>
 
 <div class="form-group">
