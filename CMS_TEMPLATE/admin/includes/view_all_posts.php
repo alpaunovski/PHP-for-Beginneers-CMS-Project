@@ -187,7 +187,7 @@
                         
                         if(isset($_GET["delete"])){
 
-                            $the_post_id = $_GET["delete"];
+                            $the_post_id = escape($_GET["delete"]);
 
                             $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
 
@@ -197,7 +197,7 @@
 
                         if(isset($_GET["reset"])){
 
-                            $the_post_id = $_GET["reset"];
+                            $the_post_id = escape($_GET["reset"]);
 
                             $query = "UPDATE posts SET post_views_count = 0 WHERE post_id =" . mysqli_real_escape_string($connection, $the_post_id) . " ";
 

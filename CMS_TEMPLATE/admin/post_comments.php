@@ -40,7 +40,7 @@
                             </thead>
                             <tbody>
                                 <?php 
-                                    $query = "SELECT * FROM comments WHERE comment_post_id =". mysqli_real_escape_string($connection, $_GET['id']) . " ";
+                                    $query = "SELECT * FROM comments WHERE comment_post_id =". mysqli_real_escape_string($connection, escape($_GET['id'])) . " ";
                                     $select_comments = mysqli_query($connection, $query);
 
                                     while ($row = mysqli_fetch_assoc($select_comments)){
@@ -135,7 +135,7 @@
                             $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$the_comment_id} ";
 
                             $unapprove_query = mysqli_query($connection, $query);
-                            header("Location: post_comments.php?id=" .$_GET['id']);
+                            header("Location: post_comments.php?id=" . escape($_GET['id']));
                         }
 
 
@@ -147,7 +147,7 @@
                             $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
 
                             $delete_query = mysqli_query($connection, $query);
-                            header("Location: post_comments.php?id=" . $_GET['id']);
+                            header("Location: post_comments.php?id=" . escape($_GET['id']));
                         }
                         
                         ?>
