@@ -85,7 +85,7 @@
                                 <tr>
                                     <th><input id="selectAllBoxes" type="checkbox" name="" id=""></th>
                                     <th>ID</th>
-                                    <th>Author</th>
+                                    <th>User</th>
                                     <th>Title</th>
                                     <th>Category</th>
                                     <th>Status</th>
