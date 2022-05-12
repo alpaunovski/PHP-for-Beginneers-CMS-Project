@@ -108,22 +108,23 @@ if(isset($_POST["update_post"])){
     
     <label for="post_user">Users</label>
     <select name="post_user" id="post_user">
+    <?php echo "<option value='$post_user'>$post_user</option>"; ?>
 
     <?php 
     
     $query = "SELECT * FROM users ";
-                                        $select_users = mysqli_query($connection, $query);
+    $select_users = mysqli_query($connection, $query);
 
-                                        // confirm($select_categories);
-                            
-                                        while ($row = mysqli_fetch_assoc($select_users)){
-                                            $user_id = $row["user_id"];
-                                            $username = $row["username"];
-                                            echo "<tr>";
+    // confirm($select_categories);
 
-                                            echo "<option value='$username'>$username</option>";
+    while ($row = mysqli_fetch_assoc($select_users)){
+        $user_id = $row["user_id"];
+        $username = $row["username"];
+        echo "<tr>";
 
-                                            }
+        echo "<option value='$username'>$username</option>";
+
+        }
 
     ?>
 
