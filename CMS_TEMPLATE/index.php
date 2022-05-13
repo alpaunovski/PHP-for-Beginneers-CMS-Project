@@ -32,9 +32,13 @@
                 $page_1 = ($page * 5) -5;
             }
 
-            $post_query_count = "SELECT * FROM posts";
+            $post_query_count = "SELECT * FROM posts WHERE post_status = 'published' ";
             $find_count = mysqli_query($connection, $post_query_count);
             $count = mysqli_num_rows($find_count);
+
+            if($count < 1){
+                echo "<h1 class='text-center' >No posts available</h1>";
+            } else {
 
             $count = ceil($count / 5);
 
@@ -78,7 +82,7 @@
 
                 <hr>
 
-            <?php } }?>
+            <?php  }}}?>
 
 
 
