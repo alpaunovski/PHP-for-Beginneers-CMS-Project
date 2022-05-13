@@ -1,3 +1,4 @@
+<?php include "admin/includes/functions.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
