@@ -9,7 +9,7 @@ $to = "aleksandar@paunovsky.com";
 $subject = escape($_POST['subject']);
 $body = escape($_POST['body']);
 $email = escape($_POST['email']);
-$header = escape($_POST['email']);
+$header = "From: " . escape($_POST['email']);
 
 // the message
 $msg = "From: ". $email . "\n" . "Message: \n" . $body;
