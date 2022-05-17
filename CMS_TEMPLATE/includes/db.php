@@ -1,5 +1,7 @@
 <?php
 
+ob_start();
+
 //Cool way of using a FOREACH loop to define constsants
 // $db["db_host"] = "localhost";
 // $db["db_user"] = "root";
