@@ -128,4 +128,11 @@ function recordCount ($table){
 
     return $result;
 }
+
+function checkStatus($table, $column_name, $status){
+    global $connection;
+    $query = "SELECT * FROM $table WHERE $column_name = '$status' ";
+    $result = mysqli_query($connection, $query);
+    return mysqli_num_rows($result);
+}
 ?>
