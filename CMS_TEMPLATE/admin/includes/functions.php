@@ -1,5 +1,10 @@
 <?php
 
+function redirect ($location){
+
+    return header("Location:" . $location);
+}
+
 function confirm($result){
     global $connection;
     if(!$result){
@@ -7,6 +12,8 @@ function confirm($result){
     }
 
 }
+
+
 
 function escape($string){
     global $connection;
@@ -169,6 +176,73 @@ function username_exists($username){
         return true;
     } else {
         return false;
+    }
+
+}
+
+function email_exists($email){
+    global $connection;
+
+    $query = "SELECT user_email FROM users WHERE user_email = '$email' ";
+
+    $result = mysqli_query($connection, $query);
+
+
+    confirm($result);
+
+    if (mysqli_num_rows($result) > 0){
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+function register_user($username, $email, $password){
+    global $connection;
+
+ 
+
+
+    if(username_exists($username)){
+        $message = "User exists";
+
+    }
+
+    if(!empty($username) && !empty($password) && !empty($email)){
+
+    $username = mysqli_real_escape_string($connection, $username);
+    $email = mysqli_real_escape_string($connection, $email);
+    $password = mysqli_real_escape_string($connection, $password);
+
+    $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+
+
+    // $query = "SELECT randSalt FROM users ";
+    // $select_rand_salt_query = mysqli_query($connection, $query);
+
+    // if(!$select_rand_salt_query){
+    //     die("Query failed." . mysqli_error($connection));
+    // }
+
+    // $row = mysqli_fetch_array($select_rand_salt_query);
+
+    // $salt = $row['randSalt'];
+
+
+    // $password = crypt($password, $salt);
+
+    $query = "INSERT INTO users (username, user_email, user_password, user_role) ";
+    $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber' )";
+    $register_user_query = mysqli_query($connection, $query);
+    confirm($register_user_query);
+
+    // $message = "Your registration has been submitted";
+
+    // echo $password;
+
+    } else {
+        $message = "Fields cannot be empty";
     }
 
 }
