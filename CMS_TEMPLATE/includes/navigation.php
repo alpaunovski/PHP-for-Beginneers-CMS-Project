@@ -43,7 +43,7 @@
 
             ?>
                 <li>
-                    <a href="admin">Admin</a>
+                    <a href="/cms/admin">Admin</a>
                 </li>
 
 
@@ -64,7 +64,7 @@
                         echo "                
                         
                         <li>
-                            <a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a>
+                            <a href='/cms/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a>
                         </li> ";
                     }
                 }

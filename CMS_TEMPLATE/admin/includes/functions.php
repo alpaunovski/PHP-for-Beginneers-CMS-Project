@@ -1,10 +1,38 @@
 <?php
 
+//Redirect user to a specified location.
 function redirect ($location){
 
-    return header("Location:" . $location);
+    header("Location:" . $location);
+    exit;
+}
+//Check the request method
+function ifItIsMethod($method = null){
+    if($_SERVER['REQUEST_METHOD'] == strtoupper($method)){
+        return true;
+    }
+
+    return false;
+}
+//Check if user is logged in
+function isLoggedIn(){
+
+    if(isset($_SESSION['user_role'])){
+
+        return true;
+
+    }
+
+    return false;
+}
+//Check if user is logged in and redirect
+function checkIfUserIsLoggedInAndRedirect($redirectLocation=null){
+    if (isLoggedIn()) {
+        redirect($redirectLocation);
+    }
 }
 
+//Confirm query for success or errors
 function confirm($result){
     global $connection;
     if(!$result){
@@ -14,12 +42,13 @@ function confirm($result){
 }
 
 
-
+//Escape strings before inserting them in the database
 function escape($string){
     global $connection;
     return mysqli_real_escape_string($connection, trim($string));
 }
 
+//Display users online
 function users_online() {
 
     if(isset($_GET['onlineusers'])){
@@ -55,8 +84,10 @@ function users_online() {
 } //Get request isset();
 }
 
+//Call the users online function to activate it.
 users_online();
 
+//Add categories
 function insert_categories (){
 
     global $connection;
@@ -82,7 +113,7 @@ function insert_categories (){
 
 }
 
-
+//Find all categories and display them
 function findAllCategories(){
     global $connection;
 
@@ -107,7 +138,7 @@ function findAllCategories(){
 
 
 }
-
+//Delete categories
 function deleteCategories(){
     global $connection;
 
@@ -123,7 +154,7 @@ function deleteCategories(){
     }
 
 }
-
+//Count how many rows in a table
 function recordCount ($table){
     global $connection;
     $query = "SELECT * FROM " . $table;
@@ -135,7 +166,7 @@ function recordCount ($table){
 
     return $result;
 }
-
+//Check the status of posts and users
 function checkStatus($table, $column_name, $status){
     global $connection;
     $query = "SELECT * FROM $table WHERE $column_name = '$status' ";
@@ -143,6 +174,7 @@ function checkStatus($table, $column_name, $status){
     return mysqli_num_rows($result);
 }
 
+//Check if user is admin
 function is_admin($username){
     global $connection;
     $query = "SELECT user_role FROM users WHERE username = '$username' ";
@@ -161,7 +193,7 @@ function is_admin($username){
     }
 }
 
-
+//Check if username exists
 function username_exists($username){
     global $connection;
 
@@ -179,7 +211,7 @@ function username_exists($username){
     }
 
 }
-
+//Check if email exists
 function email_exists($email){
     global $connection;
 
