@@ -290,11 +290,12 @@ while($row = mysqli_fetch_array($select_user_query)){
         redirect("/cms/admin");
         
     } else {
-        redirect("/cms/index.php");
+        return false;
     }
 
 }
 
+return true;
 
 }
 ?>
