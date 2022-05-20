@@ -1,14 +1,16 @@
 <?php  include "includes/db.php"; ?>
- <?php  include "includes/header.php"; ?>
+<?php //Header.php already includes functions.php ?>
+<?php  include "includes/header.php"; ?>
 
  <?php 
- 
+ //Submit button 
  if(isset($_POST['submit'])) {
 
     $username = escape(trim($_POST['username']));
     $email = escape(trim($_POST['email']));
     $password = escape(trim($_POST['password']));
 
+    //Array of errors
     $error = [
 
         'username' => '',
@@ -19,6 +21,7 @@
 
     ];
 
+    //Checking if username, email or password are empty or of required length. Populate the Error array if necessary.
     if(strlen($username) < 4){
         $error['username'] = 'Username needs to be longer';
     }
@@ -41,6 +44,18 @@
 
     if($password == '') {
         $error['password'] = 'Password cannot be empty';
+    }
+
+    //Registering the user. We check the Error array for errors.
+    foreach($error as $key => $value) {
+
+        //If Errors array is empty, we proceed to register the user.
+        if(empty($value)){
+            register_user($username, $email, $password);
+
+            //We login the user here
+            login_user($username, $password);
+        }
     }
 
 }
