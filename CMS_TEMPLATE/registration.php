@@ -61,6 +61,8 @@
 
         register_user($username, $email, $password);
 
+        login_user($username, $password);
+
 
     }
 }
