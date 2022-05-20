@@ -4,7 +4,7 @@
 
  <?php 
  //Submit button 
- if(isset($_POST['submit'])) {
+ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $username = escape(trim($_POST['username']));
     $email = escape(trim($_POST['email']));
@@ -51,13 +51,18 @@
 
         //If Errors array is empty, we proceed to register the user.
         if(empty($value)){
-            // register_user($username, $email, $password);
 
-            // //We login the user here
-            // login_user($username, $password);
+
+            unset($error[$key]);
         }
-    }
+    } //foreach
 
+    if(empty($error)){
+
+        register_user($username, $email, $password);
+
+
+    }
 }
  
  
@@ -79,7 +84,7 @@
 
                 <h6 class="text-center">
 
-                <?php echo $message; ?>
+                
 
                 </h6>
                 <h1>Register</h1>
@@ -103,7 +108,7 @@
                             <p><?php echo isset($error['password']) ? $error['password'] : '' ?></p>
                         </div>
                 
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                        <input type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
                     </form>
                  
                 </div>
