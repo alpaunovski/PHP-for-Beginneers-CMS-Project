@@ -3,11 +3,36 @@
 
 <?php 
 
-if(!ifItIsMethod('GET') || !$_GET['forgot']){
+if(!ifItIsMethod('GET') && !isset($_GET['forgot'])){
 
     redirect('index.php');
 }
 
+
+if(!ifItIsMethod('POST')){
+
+    if(isset($_POST['email'])){
+        $email = $_POST['email'];
+
+        $length = 50;
+
+        $token = bin2hex(openssl_random_pseudo_bytes($length));
+
+        if(email_exists($email)){
+    
+            if($stmt = mysqli_prepare($connection, "UPDATE users SET token='{$token} WHERE user_email = ?'")){
+                mysqli_stmt_bind_param($stmt, "s". $email);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+            } else {
+                echo "WRONG";
+            }
+
+
+    
+        }
+    }
+}
 
 ?>
 
