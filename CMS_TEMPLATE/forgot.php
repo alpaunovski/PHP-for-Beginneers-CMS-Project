@@ -1,5 +1,14 @@
+<?php  use PHPMailer\PHPMailer\PHPMailer; ?>
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
+
+<?php
+
+require './vendor/autoload.php';
+require './classes/Config.php';
+
+
+?>
 
 <?php 
 
@@ -24,9 +33,41 @@ if(!ifItIsMethod('POST')){
                 mysqli_stmt_bind_param($stmt, "s". $email);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
-            } else {
-                echo "WRONG";
-            }
+            } 
+
+
+            /**
+             * 
+             * Configure PHPMailer
+             * 
+             * 
+             */
+            $mail = new PHPMailer();
+                 //Server settings
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = Config::SMTP_HOST;                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = Config::SMTP_USER;                     //SMTP username
+    $mail->Password   = Config::SMT_PASSWORD;                               //SMTP password
+    // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = Config::SMTP_PORT;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+      //Recipients
+      $mail->setFrom('from@example.com', 'Mailer');
+      $mail->addAddress($email);     //Add a recipient
+      $mail->Subject = 'This is a test email';
+      $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+
+  
+
+    $mail->isHTML(true);                                  //Set email format to HTML
+
+    if($mail->send()){
+        echo "It was sent";
+    } else "NOT SENT";
+
+
 
 
     
