@@ -10,6 +10,8 @@
 
 // $token = $_GET['token'];
 
+$email = 'apaunovski@gmail.com';
+
 $token = '424a50965bbc458063577d0655ae2fd0a5af359087d6a62b6c5bee4ddbb741395276df1b90b9fc4dbbb23e3b1474802d5d43';
 
 if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token = ?')){
@@ -24,7 +26,26 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
     // }
 
     if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
-        echo "They are both set";
+
+        if($_POST['password'] === $_POST['confirmPassword']){
+
+            $password = $_POST['password'];
+
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+
+            if($stmt = mysqli_prepare($connection, "UPDATE users SET token='', user_password='{$hashed_password}' WHERE user_email = ?" )){
+                mysqli_stmt_bind_param($stmt, "s", $email);
+                mysqli_stmt_execute($stmt);
+
+                if(mysqli_stmt_affected_rows($stmt) >= 1){
+                    echo "IT WAS AFFECTED";
+                } else {
+                    echo "BAD QUERY";
+                }
+            }
+        }
+
+
     }
 
 }
