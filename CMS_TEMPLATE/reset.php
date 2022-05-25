@@ -38,10 +38,8 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
                 mysqli_stmt_execute($stmt);
 
                 if(mysqli_stmt_affected_rows($stmt) >= 1){
-                    echo "IT WAS AFFECTED";
-                } else {
-                    echo "BAD QUERY";
-                }
+                    redirect('/cms/login.php');
+                } 
             }
         }
 
