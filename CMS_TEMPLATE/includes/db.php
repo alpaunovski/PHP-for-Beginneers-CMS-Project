@@ -20,9 +20,8 @@ define("DATABASE", "cms");
 
 $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DATABASE);
 
-// if($connection){
-//     echo "We are connected";
-// }
+$query = "SET NAMES utf8";
+$query = mysqli_query($connection, $query);
 
 
 

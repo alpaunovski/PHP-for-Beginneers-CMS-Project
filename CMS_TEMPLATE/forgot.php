@@ -1,81 +1,118 @@
-<?php  use PHPMailer\PHPMailer\PHPMailer; ?>
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
 
+
+
 <?php
 
-require './vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+
 require './classes/Config.php';
 
+require './vendor/autoload.php';
 
-?>
+    if(!isset($_GET['forgot'])){
 
-<?php 
+        redirect('index');
 
-if(!ifItIsMethod('GET') && !isset($_GET['forgot'])){
-
-    redirect('index.php');
-}
-
-
-if(!ifItIsMethod('POST')){
-
-    if(isset($_POST['email'])){
-        $email = $_POST['email'];
-
-        $length = 50;
-
-        $token = bin2hex(openssl_random_pseudo_bytes($length));
-
-        if(email_exists($email)){
-    
-            if($stmt = mysqli_prepare($connection, "UPDATE users SET token='{$token} WHERE user_email = ?'")){
-                mysqli_stmt_bind_param($stmt, "s". $email);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
-            } 
-
-
-            /**
-             * 
-             * Configure PHPMailer
-             * 
-             * 
-             */
-            $mail = new PHPMailer();
-                 //Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = Config::SMTP_HOST;                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = Config::SMTP_USER;                     //SMTP username
-    $mail->Password   = Config::SMT_PASSWORD;                               //SMTP password
-    // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = Config::SMTP_PORT;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-      //Recipients
-      $mail->setFrom('from@example.com', 'Mailer');
-      $mail->addAddress($email);     //Add a recipient
-      $mail->Subject = 'This is a test email';
-      $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-
-  
-
-    $mail->isHTML(true);                                  //Set email format to HTML
-
-    if($mail->send()){
-        echo "It was sent";
-    } else "NOT SENT";
-
-
-
-
-    
-        }
     }
-}
+
+
+    if(ifItIsMethod('post')){
+
+        if(isset($_POST['email'])) {
+
+            $email = $_POST['email'];
+
+            $length = 50;
+
+            $token = bin2hex(openssl_random_pseudo_bytes($length));
+
+
+            if(email_exists($email)){
+
+
+                if($stmt = mysqli_prepare($connection, "UPDATE users SET token='{$token}' WHERE user_email= ?")){
+
+                    mysqli_stmt_bind_param($stmt, "s", $email);
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_close($stmt);
+
+
+
+                    /**
+                     *
+                     * configure PHPMailer
+                     *
+                     *
+                     */
+
+                    $mail = new PHPMailer();
+
+                    $mail->isSMTP();
+                    $mail->Host = Config::SMTP_HOST;
+                    $mail->Username = Config::SMTP_USER;
+                    $mail->Password = Config::SMTP_PASSWORD;
+                    $mail->Port = Config::SMTP_PORT;
+                    $mail->SMTPSecure = 'tls';
+                    $mail->SMTPAuth = true;
+                    $mail->isHTML(true);
+                    $mail->CharSet = 'UTF-8';
+
+
+                    $mail->setFrom('edwin@codingfaculty.com', 'Edwin Diaz');
+                    $mail->addAddress($email);
+
+                    $mail->Subject = 'This is a test email';
+
+                    $mail->Body = '<p>Please click to reset your password
+
+                    <a href="http://localhost:8888/cms/reset.php?email='.$email.'&token='.$token.' ">http://localhost:888/cms/reset.php?email='.$email.'&token='.$token.'</a>
+
+
+
+                    </p>';
+
+
+                    if($mail->send()){
+
+                        $emailSent = true;
+
+                    } else{
+
+                        echo "NOT SENT";
+
+                    }
+
+
+
+
+
+                }
+
+
+
+
+            }
+
+
+
+
+        }
+
+
+     }
+
+
+
+
 
 ?>
+
+
+
+
+
 
 <!-- Page Content -->
 <div class="container">
@@ -87,6 +124,9 @@ if(!ifItIsMethod('POST')){
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
+
+
+                        <?php if(!isset( $emailSent)): ?>
 
 
                                 <h3><i class="fa fa-lock fa-4x"></i></h3>
@@ -113,6 +153,15 @@ if(!ifItIsMethod('POST')){
                                     </form>
 
                                 </div><!-- Body-->
+
+                            <?php else: ?>
+
+
+                                <h2>Please check your email</h2>
+
+
+                            <?php endIf; ?>
+
 
                         </div>
                     </div>
