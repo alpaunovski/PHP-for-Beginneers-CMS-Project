@@ -3,16 +3,21 @@
 
 <?php 
 
-// if(isset($_GET['email']) && !isset($_GET['token'])) {
+$verified = false;
 
-//     redirect('index');
-// }
+if(isset($_GET['email']) && !isset($_GET['token'])) {
 
-// $token = $_GET['token'];
+    redirect('index');
+}
 
-$email = 'apaunovski@gmail.com';
+$token = $_GET['token'];
+$email = $_GET['email'];
 
-$token = '424a50965bbc458063577d0655ae2fd0a5af359087d6a62b6c5bee4ddbb741395276df1b90b9fc4dbbb23e3b1474802d5d43';
+// $email = 'apaunovski@gmail.com';
+
+// $token = '424a50965bbc458063577d0655ae2fd0a5af359087d6a62b6c5bee4ddbb741395276df1b90b9fc4dbbb23e3b1474802d5d43';
+
+
 
 if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token = ?')){
     mysqli_stmt_bind_param($stmt, "s", $token);
@@ -40,6 +45,10 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
                 if(mysqli_stmt_affected_rows($stmt) >= 1){
                     redirect('/cms/login.php');
                 } 
+
+                mysqli_stmt_close($stmt);
+
+                $verified = true;
             }
         }
 
@@ -52,6 +61,8 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
 
 <!-- Page Content -->
 <div class="container">
+
+<?php if(!$verified): ?>
 
     <div class="form-gap"></div>
     <div class="container">
@@ -91,6 +102,11 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
             </div>
         </div>
     </div>
+
+    <?php else: ?>
+        <?php redirect('/cms/login.php'); ?>
+
+    <?php endif; ?>
 
 
     <hr>
