@@ -6,6 +6,13 @@
 
 <?php include "includes/navigation.php" ?>
 
+<?php 
+
+if(isset($_POST['likes'])){
+    echo "<h1> It works</h1>";
+}
+?>
+
     <!-- Page Content -->
     <div class="container">
 
@@ -227,9 +234,21 @@
 
 $(document).ready(function(){
 
-    $('.like').click(function(){
-        console.log("It works");
-    });
+    var post_id = <?php echo $the_post_id ?>;
+    var user_id = 41;
 
-})
+    $('.like').click(function(){
+$.ajax({
+    url: "/cms/post.php?p_id=<?php echo $the_post_id ?>",
+    type: 'post',
+    data: {
+        'liked': 1,
+        'post_id': post_id,
+        'user_id': user_id
+    }
+});    
+
+});
+
+});
 </script>
