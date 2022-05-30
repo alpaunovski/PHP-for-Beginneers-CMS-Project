@@ -74,6 +74,20 @@
 
                 <hr>
 
+                <div class="row">
+                    <p class="pull-right">
+                        <a href=""><span class="glyphicon glyphicon-thumbs-up"></span>Like</a>
+                    </p>
+                </div>
+
+                <div class="row">
+                    <p class="pull-right">
+                        Likes: 10
+                    </p>
+                </div>
+
+                <div class="clearfix"></div>
+
             <?php }  
         
         
@@ -208,3 +222,8 @@
 
 
 <?php include "includes/footer.php" ?>
+
+<script>
+
+
+</script>
