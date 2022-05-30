@@ -316,4 +316,18 @@ function login_user($username, $password)
 
  }
 
+ //Return current user
+ function currentUser(){
+     if(isset($_SESSION['username'])){
+         return $_SESSION['username'];
+     } 
+ }
+
+ function imagePlaceholder($image=''){
+     if(!$image){
+        return "image_1.jpg";
+     } else {
+        return $image;
+    }
+ }
 ?>
