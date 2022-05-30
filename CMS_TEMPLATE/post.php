@@ -76,7 +76,7 @@
 
                 <div class="row">
                     <p class="pull-right">
-                        <a href=""><span class="glyphicon glyphicon-thumbs-up"></span>Like</a>
+                        <a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Like</a>
                     </p>
                 </div>
 
@@ -225,5 +225,11 @@
 
 <script>
 
+$(document).ready(function(){
 
+    $('.like').click(function(){
+        console.log("It works");
+    });
+
+})
 </script>
