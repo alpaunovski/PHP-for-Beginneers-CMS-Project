@@ -9,6 +9,8 @@
 
 <?php 
 
+//Liking system
+
 //Checking for the AJAX POST request
 
 if(isset($_POST['liked'])){
@@ -25,7 +27,7 @@ $postResult = mysqli_query($connection, $query);
 $post = mysqli_fetch_array($postResult);
 $likes = $post['likes'];
 
-//2. Update the post with likes
+//2. Update the post with likes Incrementing Likes
 
 
 mysqli_query($connection, "UPDATE posts SET likes=$likes+1 WHERE post_id=$post_id");
@@ -35,6 +37,43 @@ mysqli_query($connection, "UPDATE posts SET likes=$likes+1 WHERE post_id=$post_i
 //3. Create likes for post
 
 mysqli_query($connection, "INSERT INTO likes(user_id, post_id) VALUES ($user_id, $post_id) ");
+
+exit();
+
+}
+
+//Unliking System
+
+if(isset($_POST['unliked'])){
+
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+
+//1. Select Post
+
+$query = "SELECT * FROM posts WHERE post_id=$post_id";
+
+$postResult = mysqli_query($connection, $query);
+
+$post = mysqli_fetch_array($postResult);
+$likes = $post['likes'];
+
+//2. Delete likes
+
+mysqli_query($connection, "DELETE FROM likes WHERE post_id=$post_id AND user_id=$user_id ");
+
+
+
+//3. Update the post with decrementing likes
+
+
+mysqli_query($connection, "UPDATE posts SET likes=$likes-1 WHERE post_id=$post_id");
+
+
+
+//3. Create likes for post
+
+// mysqli_query($connection, "INSERT INTO likes(user_id, post_id) VALUES ($user_id, $post_id) ");
 
 exit();
 
@@ -121,10 +160,19 @@ exit();
 
                 <hr>
 
+                <!-- Liking and Unliking System -->
                 <div class="row">
                     <p class="pull-right">
                         <!-- This is targeted by the JavaScript at the end of the file -->
                         <a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Like</a>
+                    </p>
+
+                </div>
+
+                <div class="row">
+                <p class="pull-right">
+                        <!-- This is targeted by the JavaScript at the end of the file -->
+                        <a class="unlike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span>Unlike </a>
                     </p>
                 </div>
 
@@ -303,12 +351,27 @@ $(document).ready(function(){
     //Hardcoded user id. This id belongs to admin user rico.
     var user_id = 41;
 
+    //Liking
     $('.like').click(function(){
 $.ajax({
     url: "/cms/post.php?p_id=<?php echo $the_post_id ?>",
     type: 'post',
     data: {
         'liked': 1,
+        'post_id': post_id,
+        'user_id': user_id
+    }
+});    
+
+});
+
+//Unliking
+$('.unlike').click(function(){
+$.ajax({
+    url: "/cms/post.php?p_id=<?php echo $the_post_id ?>",
+    type: 'post',
+    data: {
+        'unliked': 1,
         'post_id': post_id,
         'user_id': user_id
     }
