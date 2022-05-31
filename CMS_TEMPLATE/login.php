@@ -1,11 +1,13 @@
 <?php  include "includes/db.php"; ?>
-<?php //Header.php already includes functions.php ?>
+<!-- Header.php already includes functions.php -->
 <?php  include "includes/header.php"; ?>
 
 <?php 
 
+//If user is logged in, redirect them to admin area
 checkIfUserIsLoggedInAndRedirect('/cms/admin');
 
+//Check for POST method, and login the user to admin area with their username and password, or redirect them back to index.php
 if(ifItIsMethod('POST')){
     if(isset($_POST['username']) && isset($_POST['password'])) {
         login_user($_POST['username'], $_POST['password']);
@@ -73,6 +75,7 @@ if(ifItIsMethod('POST')){
 
 	<hr>
 
+	<!-- Footer -->
 	<?php include "includes/footer.php";?>
 
 </div> <!-- /.container -->

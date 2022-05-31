@@ -1,4 +1,5 @@
 
+<!-- Include database connection and header file -->
 <?php include "includes/db.php" ?>
 <?php include "includes/header.php" ?>
 
@@ -8,8 +9,35 @@
 
 <?php 
 
-if(isset($_POST['likes'])){
-    echo "<h1> It works</h1>";
+//Checking for the AJAX POST request
+
+if(isset($_POST['liked'])){
+
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+
+//1. Select Post
+
+$query = "SELECT * FROM posts WHERE post_id=$post_id";
+
+$postResult = mysqli_query($connection, $query);
+
+$post = mysqli_fetch_array($postResult);
+$likes = $post['likes'];
+
+//2. Update the post with likes
+
+
+mysqli_query($connection, "UPDATE posts SET likes=$likes+1 WHERE post_id=$post_id");
+
+
+
+//3. Create likes for post
+
+mysqli_query($connection, "INSERT INTO likes(user_id, post_id) VALUES ($user_id, $post_id) ");
+
+exit();
+
 }
 ?>
 
@@ -23,12 +51,17 @@ if(isset($_POST['likes'])){
 
             <?php 
 
+            //This is the View counter
+
+            //If we supply a post id, display the post. Else, return the user to index.php
             if(isset($_GET["p_id"])){
                 $the_post_id = escape($_GET["p_id"]);
             if($_SERVER['REQUEST_METHOD'] !== 'POST'){
                 $view_query = "UPDATE posts SET post_views_count = post_views_count +1 WHERE post_id = $the_post_id ";
 
                 $send_query = mysqli_query($connection, $view_query);
+
+                //Checking for errors
                 
                 if(!$send_query) {
                     die("Query failed " . mysqli_error($connection));
@@ -36,6 +69,7 @@ if(isset($_POST['likes'])){
 
             }
 
+            //Displaying only published posts to users, OR all posts to Admin user
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
                 $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
 
@@ -45,15 +79,20 @@ if(isset($_POST['likes'])){
             }
 
 
-
+            //Making the posts query
                 $select_all_posts_query = mysqli_query($connection, $query);
 
+                //Check if there are posts in the database.
+
+                //If not, inform the user there aren't any posts available.
                 if(mysqli_num_rows($select_all_posts_query) < 1){
 
                     echo "<h1 class='text-center' >No categories available</h1>";
 
+                //Else, display the list of posts.
                 } else {
-
+                
+                    //Fetching posts data in an associative array
                 while ($row = mysqli_fetch_assoc($select_all_posts_query)){
                     $post_title = $row["post_title"];
                     $post_author = $row["post_author"];
@@ -75,6 +114,7 @@ if(isset($_POST['likes'])){
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
+                <!-- We have our own Image Placeholder function -->
                 <img class="img-responsive" src="images/<?php echo imagePlaceholder($post_image); ?>" alt="">                <hr>
                 <p><?php echo $post_content ?></p>
 
@@ -83,6 +123,7 @@ if(isset($_POST['likes'])){
 
                 <div class="row">
                     <p class="pull-right">
+                        <!-- This is targeted by the JavaScript at the end of the file -->
                         <a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Like</a>
                     </p>
                 </div>
@@ -107,13 +148,18 @@ if(isset($_POST['likes'])){
                 <!-- Blog Comments -->
 
                 <?php 
+
+                //Checking for POST. Escaping everything before sending it to the DB.
                 if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 if(isset($_POST["create_comment"])){
                     $the_post_id = escape($_GET["p_id"]);
 
+                    //Making the query
                    $comment_author = escape($_POST["comment_author"]);
                    $comment_email = escape($_POST["comment_email"]);
                    $comment_content = escape($_POST["comment_content"]);
+
+                   //Checking if all fields have been filled by the user
 
                     if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content) ){
 
@@ -123,15 +169,14 @@ if(isset($_POST['likes'])){
      
                         $create_comment_query = mysqli_query($connection, $query);
      
+                        //Checking for query errors
                         if(!$create_comment_query){
                          die("QUERY FAILED" . mysqli_error($connection));
                         }
      
-                        // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                        // $query .= "WHERE post_id = $the_post_id ";
-     
-                        // $update_comment_count = mysqli_query($connection, $query);
+
                     } else {
+                        //If fields empty, return an error to the user
                         echo "<script>alert('Fields cannot be empty')</script>";
                     }
                     
@@ -139,8 +184,9 @@ if(isset($_POST['likes'])){
                    
                 } //End of if isset check
 
+                //Clear the comment form and redirect the user back to the same post.
                 header("Location: /cms/post.php?p_id=$the_post_id");
-            }
+            } //End of POST method check
 
                 ?>
 
@@ -172,14 +218,19 @@ if(isset($_POST['likes'])){
 
                 <?php
 
+                //Fetch the approved comments
 
                 $query = "SELECT * FROM comments WHERE comment_post_id = {$the_post_id} ";
                 $query .= "AND comment_status = 'approved' ";
                 $query .= "ORDER BY comment_id DESC ";
                 $select_comment_query = mysqli_query($connection, $query);
+
+                //Check for query errors
                 if(!$select_comment_query) {
                     die("QUERY FAILED" . mysqli_error($connection));
                 }
+
+                //Retrieve comment fields
                 while($row = mysqli_fetch_array($select_comment_query)){
                     $comment_date = $row["comment_date"];
                     $comment_content = $row["comment_content"];
@@ -189,15 +240,18 @@ if(isset($_POST['likes'])){
                 ?>
 
 
-                              <!-- Comment -->
+                              <!-- Individual Comment -->
                 <div class="media">
                     <a class="pull-left" href="#">
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
+                        <!-- Display comment author -->
                         <h4 class="media-heading"><?php echo $comment_author ?>
+                        <!-- Display comment date -->
                             <small><?php echo $comment_date ?></small>
                         </h4>
+                        <!-- Display comment content -->
                         <?php echo $comment_content ?>
                     </div>
                 </div>
@@ -206,7 +260,13 @@ if(isset($_POST['likes'])){
 
                 <?php
 
-                    }           }      } else {
+                    } //Close While Loop for retriving comment data
+                           } //Display list of posts if there are posts. Way up there.
+
+                             } // Close the Display Individual Post
+
+                             // Redirect to index if no "p_id" supplied
+                              else {
 
                         header("Location: index.php");
                     }
@@ -228,13 +288,19 @@ if(isset($_POST['likes'])){
         <hr>
 
 
+        <!-- Include the footer -->
 <?php include "includes/footer.php" ?>
 
+
+<!-- Likes script -->
 <script>
 
 $(document).ready(function(){
 
+    // Get the post id from PHP
     var post_id = <?php echo $the_post_id ?>;
+
+    //Hardcoded user id. This id belongs to admin user rico.
     var user_id = 41;
 
     $('.like').click(function(){

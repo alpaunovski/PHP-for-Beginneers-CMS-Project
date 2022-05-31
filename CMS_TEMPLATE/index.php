@@ -1,5 +1,8 @@
 
+<!-- Databse Connection-->
 <?php include "includes/db.php" ?>
+
+<!-- Header -->
 <?php include "includes/header.php" ?>
 
     <!-- Navigation -->
@@ -16,7 +19,11 @@
             <div class="col-md-8">
 
             <?php 
+
+            //Five posts per page
             $per_page = "5";
+
+            //If we are getting a page
 
             if(isset($_GET['page'])){
 
@@ -27,11 +34,14 @@
                 $page="";
             }
 
+            //Pages start from zero
             if ($page =="" || $page == 1){
                 $page_1 = 0;
             } else {
                 $page_1 = ($page * 5) -5;
             }
+
+            //If user is admin, display all posts, else display only published posts
 
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
                 $post_query_count = "SELECT * FROM posts ";
@@ -40,20 +50,25 @@
                 $post_query_count = "SELECT * FROM posts WHERE post_status = 'published' ";
 
             }
-
+            //Figure how many posts there are in total
             $find_count = mysqli_query($connection, $post_query_count);
             $count = mysqli_num_rows($find_count);
 
+            //If no posts then echo no posts available
             if($count < 1){
                 echo "<h1 class='text-center' >No posts available</h1>";
             } else {
-
+            
+            //We determine the number of pages. 5 posts per page.
             $count = ceil($count / 5);
 
+                //Pagination system query.
 
+                //We limit which range of posts to display. page_1 is the start of the range and $per_page is the end of the range.
                 $query = "SELECT * FROM posts LIMIT $page_1, $per_page ";
                 $select_all_posts_query = mysqli_query($connection, $query);
 
+                //Fetch posts fields
                 while ($row = mysqli_fetch_assoc($select_all_posts_query)){
                     $post_id = $row["post_id"];
                     $post_title = $row["post_title"];
@@ -103,6 +118,8 @@
         <!-- /.row -->
 
         <hr>
+
+        <!-- The pager itself -->
 <ul class="pager">
 
 <?php 

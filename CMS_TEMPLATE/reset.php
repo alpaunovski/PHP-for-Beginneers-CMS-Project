@@ -3,7 +3,6 @@
 
 <?php 
 
-$verified = false;
 
 if(isset($_GET['email']) && !isset($_GET['token'])) {
 
@@ -48,7 +47,6 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
 
                 mysqli_stmt_close($stmt);
 
-                $verified = true;
             }
         }
 
@@ -62,7 +60,6 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
 <!-- Page Content -->
 <div class="container">
 
-<?php if(!$verified): ?>
 
     <div class="form-gap"></div>
     <div class="container">
@@ -103,10 +100,7 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
         </div>
     </div>
 
-    <?php else: ?>
-        <?php redirect('/cms/login.php'); ?>
 
-    <?php endif; ?>
 
 
     <hr>
