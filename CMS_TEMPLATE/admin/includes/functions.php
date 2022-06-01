@@ -316,6 +316,9 @@ function login_user($username, $password)
 
  }
 
+ //Return the ID of the logged in user
+
+ 
  //Return current user
  function currentUser(){
      if(isset($_SESSION['username'])){
@@ -323,6 +326,7 @@ function login_user($username, $password)
      } 
  }
 
+ //Image placeholders
  function imagePlaceholder($image=''){
      if(!$image){
         return "image_1.jpg";
