@@ -327,7 +327,14 @@ function login_user($username, $password)
 function loggedInUserId(){
     if(isLoggedIn()){
         $result = query("SELECT * FROM users WHERE username='" . $_SESSION['username']." '");
+        $user = mysqli_fetch_array($result);
+        if(mysqli_num_rows($result) >=1 ){
+            return $user['user_id'];
+        }
+
     }
+
+    return false;
 }
  
  //Return current user
