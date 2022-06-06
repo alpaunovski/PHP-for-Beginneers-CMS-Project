@@ -1,4 +1,3 @@
-
 <!-- Include database connection and header file -->
 <?php include "includes/db.php" ?>
 <?php include "includes/header.php" ?>
@@ -156,23 +155,26 @@ exit();
                 <!-- We have our own Image Placeholder function -->
                 <img class="img-responsive" src="images/<?php echo imagePlaceholder($post_image); ?>" alt="">                <hr>
                 <p><?php echo $post_content ?></p>
+                <!-- Freeing the result -->
+                
+
 
 
                 <hr>
 
                 <!-- Liking and Unliking System -->
-                <div class="row">
-                    <p class="pull-right">
+                <!-- <div class="row">
+                    <p class="pull-right"> -->
                         <!-- This is targeted by the JavaScript at the end of the file -->
-                        <a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Like</a>
-                    </p>
+                        <!-- <a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Like</a> -->
+                    <!-- </p> -->
 
-                </div>
+                <!-- </div> -->
 
                 <div class="row">
                 <p class="pull-right">
                         <!-- This is targeted by the JavaScript at the end of the file -->
-                        <a class="unlike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span>Unlike </a>
+                        <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like' ?>" href="#"><span class="glyphicon glyphicon-thumbs-down"></span><?php echo userLikedThisPost($the_post_id) ? 'Unlike' : 'Like' ?> </a>
                     </p>
                 </div>
 
@@ -184,7 +186,11 @@ exit();
 
                 <div class="clearfix"></div>
 
-            <?php }  
+            <?php 
+            
+        
+            
+        }  
         
         
 
