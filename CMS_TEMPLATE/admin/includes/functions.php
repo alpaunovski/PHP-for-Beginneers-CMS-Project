@@ -316,8 +316,19 @@ function login_user($username, $password)
 
  }
 
- //Return the ID of the logged in user
+ //Execute a query on the database
+ function query($query){
+     global $connection;
 
+     return mysqli_query($connection, $query);
+ }
+
+ //Return the ID of the logged in user
+function loggedInUserId(){
+    if(isLoggedIn()){
+        $result = query("SELECT * FROM users WHERE username='" . $_SESSION['username']." '");
+    }
+}
  
  //Return current user
  function currentUser(){
