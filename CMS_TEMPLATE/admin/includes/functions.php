@@ -340,8 +340,9 @@ function loggedInUserId(){
 }
  
 //Helper function for liking posts
-function userLikedThisPost($post_id = ''){
-    $result = query("SELECT * FROM likes WHERE user_id=" . loggedInUserId() . " AND post_id=$post_id ");
+function userLikedThisPost($post_id=''){
+    global $connection;
+    $result = mysqli_query($connection, "SELECT * FROM likes WHERE user_id=" .loggedInUserId(). " AND post_id={$post_id}");
 
     return mysqli_num_rows($result) >= 1? true : false;
 }

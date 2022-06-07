@@ -174,7 +174,7 @@ exit();
                 <div class="row">
                 <p class="pull-right">
                         <!-- This is targeted by the JavaScript at the end of the file -->
-                        <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like' ?>" href="#"><span class="glyphicon glyphicon-thumbs-down"></span><?php echo userLikedThisPost($the_post_id) ? 'Unlike' : 'Like' ?> </a>
+                        <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like' ?>" href=""><span class="glyphicon glyphicon-thumbs-up"></span><?php echo userLikedThisPost($the_post_id) ? ' Unlike' : ' Like' ?> </a>
                     </p>
                 </div>
 

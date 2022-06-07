@@ -28,6 +28,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+        span.glyphicon.glyphicon-thumbs-up {
+            font-size: 22px;
+        }
+    </style>
 </head>
 
 <body>
