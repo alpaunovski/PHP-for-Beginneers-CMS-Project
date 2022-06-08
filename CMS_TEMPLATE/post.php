@@ -170,21 +170,33 @@ exit();
                     <!-- </p> -->
 
                 <!-- </div> -->
+<?php if(isLoggedIn() ){ ?>
 
-                <div class="row">
+<div class="row">
                 <p class="pull-right">
                         <!-- This is targeted by the JavaScript at the end of the file -->
                         <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like' ?>" href=""><span class="glyphicon <?php echo userLikedThisPost($the_post_id) ? 'glyphicon-thumbs-down' : 'glyphicon-thumbs-up' ?>"></span><?php echo userLikedThisPost($the_post_id) ? ' Unlike' : ' Like' ?> </a>
                     </p>
                 </div>
+    <?php } else { ?>
+        <div class="row">
+                <p class="pull-right">
+                        You need to <a href = "/cms/login.php"> Log in </a> to like posts. 
+                    </p>
+                </div>
+
+   <?php }  ?>
+
 
                 <div class="row">
-                    <p class="pull-right">
+                    <p class="pull-right likes">
                         Likes: <?php getPostLikes($the_post_id) ?>
                     </p>
                 </div>
 
                 <div class="clearfix"></div>
+
+                
 
             <?php 
             
@@ -355,7 +367,7 @@ $(document).ready(function(){
     var post_id = <?php echo $the_post_id ?>;
 
     //Hardcoded user id. This id belongs to admin user rico.
-    var user_id = 41;
+    var user_id = <?php echo loggedInUserId(); ?>;
 
     //Liking
     $('.like').click(function(){

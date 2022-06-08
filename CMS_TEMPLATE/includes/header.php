@@ -35,6 +35,10 @@
         span.glyphicon.glyphicon-thumbs-down {
             font-size: 22px;
         }
+
+        p.likes, p.login-to-post {
+            font-size: 22px;
+        }
     </style>
 </head>
 
