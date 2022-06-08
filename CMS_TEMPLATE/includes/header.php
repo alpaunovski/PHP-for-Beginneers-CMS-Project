@@ -36,7 +36,11 @@
             font-size: 22px;
         }
 
-        p.likes, p.login-to-post {
+        p.likes {
+            font-size: 22px;
+        }
+
+        p.login-to-post {
             font-size: 22px;
         }
     </style>
