@@ -32,6 +32,9 @@
         span.glyphicon.glyphicon-thumbs-up {
             font-size: 22px;
         }
+        span.glyphicon.glyphicon-thumbs-down {
+            font-size: 22px;
+        }
     </style>
 </head>
 

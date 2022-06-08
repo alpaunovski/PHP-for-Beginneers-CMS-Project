@@ -174,13 +174,13 @@ exit();
                 <div class="row">
                 <p class="pull-right">
                         <!-- This is targeted by the JavaScript at the end of the file -->
-                        <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like' ?>" href=""><span class="glyphicon glyphicon-thumbs-up"></span><?php echo userLikedThisPost($the_post_id) ? ' Unlike' : ' Like' ?> </a>
+                        <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like' ?>" href=""><span class="glyphicon <?php echo userLikedThisPost($the_post_id) ? 'glyphicon-thumbs-down' : 'glyphicon-thumbs-up' ?>"></span><?php echo userLikedThisPost($the_post_id) ? ' Unlike' : ' Like' ?> </a>
                     </p>
                 </div>
 
                 <div class="row">
                     <p class="pull-right">
-                        Likes: 10
+                        Likes: <?php getPostLikes($the_post_id) ?>
                     </p>
                 </div>
 

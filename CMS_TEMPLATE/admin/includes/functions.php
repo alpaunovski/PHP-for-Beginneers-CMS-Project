@@ -346,6 +346,12 @@ function userLikedThisPost($post_id=''){
 
     return mysqli_num_rows($result) >= 1? true : false;
 }
+
+function getPostLikes ($post_id){
+    $result = query("SELECT * FROM likes WHERE post_id=$post_id");
+    confirm($result);
+    echo mysqli_num_rows($result);
+}
  //Return current user
  function currentUser(){
      if(isset($_SESSION['username'])){
