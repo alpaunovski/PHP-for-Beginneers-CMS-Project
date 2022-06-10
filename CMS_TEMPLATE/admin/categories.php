@@ -1,5 +1,5 @@
 <?php include "includes/admin_header.php" ?>
-<?php // include "includes/functions.php" ?>
+<!-- This page displays all categories -->
 
 
 

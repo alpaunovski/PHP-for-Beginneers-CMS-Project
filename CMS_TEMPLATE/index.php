@@ -81,6 +81,8 @@
                     if($post_status == "published" ){
                     
             ?>
+
+            <!-- Page heading and secondary text -->
                     <h1 class="page-header">
                     Page Heading
                     <small>Secondary Text</small>
@@ -88,18 +90,22 @@
 
                 <!-- First Blog Post -->
                 <h2>
+                    <!-- Echo post title -->
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
+                    <!-- Echo the post author. We are echoing the post_user field from the database -->
                     by <a href="author_posts.php?author=<?php echo $post_user ?>&p_id=<?php echo $post_id ?>"><?php echo $post_user ?></a>
                 </p>
-                
+                <!-- Echoing the post date -->
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>
+                <!-- This is the post image with a link to the post itself -->
                 <a href="post.php?p_id=<?php echo $post_id; ?>">
                 <img class="img-responsive" src="images/<?php echo imagePlaceholder($post_image); ?>" alt="">
                 </a>
                 <hr>
+                <!-- This is the post content -->
                 <p><?php echo $post_content ?></p>
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
@@ -126,6 +132,8 @@
 
 for($i = 1; $i <= $count; $i++){
 
+    //If we are on the same page where the link points, we mark the page as active
+
     if($i == $page){
         echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
     } else {
@@ -140,4 +148,5 @@ for($i = 1; $i <= $count; $i++){
 
 </ul>
 
+<!-- Footer -->
 <?php include "includes/footer.php" ?>

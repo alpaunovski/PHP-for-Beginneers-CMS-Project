@@ -27,7 +27,7 @@
 
                        
                 <!-- /.row -->
-                
+                <!-- Google chart to display posts, users and other data -->
 <div class="row">
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-primary">
@@ -37,7 +37,7 @@
                         <i class="fa fa-file-text fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    
+                    <!-- Posts square -->
                     <div class='huge'><?php echo $post_counts = recordCount('posts'); ?></div>
                     
                   
@@ -54,6 +54,7 @@
             </a>
         </div>
     </div>
+    <!-- Comments square -->
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-green">
             <div class="panel-heading">
@@ -78,6 +79,7 @@
             </a>
         </div>
     </div>
+    <!-- User count square -->
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-yellow">
             <div class="panel-heading">
@@ -102,6 +104,7 @@
             </a>
         </div>
     </div>
+    <!-- Category count square -->
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-red">
             <div class="panel-heading">
@@ -130,6 +133,8 @@
                 <!-- /.row -->
 
                 <?php 
+
+                // Get counts of posts, users and comments
                 
                 $post_published_count = checkStatus('posts', 'post_status', 'published');
 
@@ -142,7 +147,7 @@
                 ?>
 
                 <div class="row">
-
+                <!-- JavaScript to display the Google chart -->
                 <script type="text/javascript">
       google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);
@@ -151,19 +156,22 @@
         var data = google.visualization.arrayToDataTable([
           ['Data', 'Count'],
 
+        //   We generate dynamically an array with element values
+
           <?php 
           
           $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
 
           $element_count = [$post_counts, $post_published_count, $post_draft_count, $comment_counts, $unapproved_comment_count, $users_counts, $subscriber_count, $categories_counts];
           
+          //Echo the array into the script
           for($i=0; $i < 8; $i++){
               echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
           }
           ?>
           
         ]);
-
+        //Chart options
         var options = {
           chart: {
             title: '',
@@ -186,5 +194,5 @@
         </div>
         <!-- /#page-wrapper -->
 
-    
+    <!-- Admin footer -->
 <?php include "includes/admin_footer.php" ?>

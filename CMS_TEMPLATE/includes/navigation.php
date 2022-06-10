@@ -15,10 +15,10 @@
             <ul class="nav navbar-nav">
 
             <?php
-            
+            //We select all categories to make navigation links query
             $query = "SELECT * FROM categories";
             $select_all_categories_query = mysqli_query($connection, $query);
-
+            //While loop to create the categories
             while ($row = mysqli_fetch_assoc($select_all_categories_query)){
                 $cat_title = $row["cat_title"];
 
@@ -31,28 +31,31 @@
                 $registration = 'registration.php';
 
                 $cat_id = $row['cat_id'];
-
+                //Mark the current category as active
                 if(isset($_GET['category']) && $_GET['category'] == $cat_id ){
                     $category_class = 'active';
                 } else if($pageName == $registration) {
                     $registration_class = 'active';
                 }
-
+                //Echo the category links
                 echo "<li class='$category_class'><a href='category.php?category={$cat_id}'>{$cat_title}</a></li>";
             }
 
             ?>
-
+            <!-- What do if the user is logged in -->
             <?php if(isLoggedIn()): ?>
-
+                <!-- Display the Admin -->
                 <li>
                     <a href="/cms/admin">Admin</a>
                 </li>
-                
+                <!-- Display the logout link -->
                 <li>
                     <a href="/cms/includes/logout.php">Logout</a>
                 </li>
+                <!-- If user is not logged in, show a link to the login page -->
             <?php else: ?>
+
+                <!-- Login page link -->
 
                 <li>
                     <a href="/cms/login.php">Login</a>
@@ -63,17 +66,17 @@
 
 
 
-
+                <!-- Registration page link -->
                 <li class='<?php echo $registration_class ?>'>
                     <a href="registration.php">Registration</a>
                 </li>
 
-
+                <!-- Contact page link -->
                 <li>
                     <a href="contact.php">Contact</a>
                 </li>
                 <?php 
-
+                // Edit post link if user is admin
                 if(isset($_SESSION['user_role'])){
                     if(isset($_GET['p_id'])){
 

@@ -1,5 +1,5 @@
 <?php session_start(); ?>
-
+<!-- Logout functionality. We null the user session and redirect them to the index page. -->
 <?php 
 
 {

@@ -1,6 +1,5 @@
 <?php include "includes/admin_header.php" ?>
-<?php // include "includes/functions.php" ?>
-
+<!-- This page is responsible for managing all posts in the Admin area. It can edit, delete, view, clone or make new posts -->
 
 
     <div id="wrapper">
@@ -22,7 +21,7 @@
                             <small>Author</small>
                     </h1>
                          <?php 
-
+                        //Depending on the source attribute, we do different things with the posts. Add, edit, or view all posts.
                             if(isset($_GET['source'])){
 
                                 $source = escape($_GET['source']);
@@ -62,5 +61,5 @@
         </div>
         <!-- /#page-wrapper -->
 
-    
+    <!-- Admin footer -->
 <?php include "includes/admin_footer.php" ?>

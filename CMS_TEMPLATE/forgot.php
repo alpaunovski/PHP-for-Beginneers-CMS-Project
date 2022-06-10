@@ -4,12 +4,14 @@
 
 
 <?php
-
+//We use PHPMailer to mail the forgotten passowrd to the user
 use PHPMailer\PHPMailer\PHPMailer;
 
 require './classes/Config.php';
 
 require './vendor/autoload.php';
+
+//We check if the user followed the forgot link
 
     if(!isset($_GET['forgot'])){
 
@@ -17,8 +19,10 @@ require './vendor/autoload.php';
 
     }
 
-
+//We check if the method is POST
     if(ifItIsMethod('post')){
+
+        //We check if the user has supplied email
 
         if(isset($_POST['email'])) {
 
@@ -26,12 +30,13 @@ require './vendor/autoload.php';
 
             $length = 50;
 
+            //We generate the token
             $token = bin2hex(openssl_random_pseudo_bytes($length));
 
-
+            //We check if this email matches an email from the database
             if(email_exists($email)){
 
-
+                //MySQL STMT query to check the email with the database
                 if($stmt = mysqli_prepare($connection, "UPDATE users SET token='{$token}' WHERE user_email= ?")){
 
                     mysqli_stmt_bind_param($stmt, "s", $email);
@@ -49,6 +54,8 @@ require './vendor/autoload.php';
 
                     $mail = new PHPMailer();
 
+                    //SMTP server settings we use MAILTRAP as a test server
+
                     $mail->isSMTP();
                     $mail->Host = Config::SMTP_HOST;
                     $mail->Username = Config::SMTP_USER;
@@ -59,7 +66,7 @@ require './vendor/autoload.php';
                     $mail->isHTML(true);
                     $mail->CharSet = 'UTF-8';
 
-
+                    //The email itself
                     $mail->setFrom('edwin@codingfaculty.com', 'Edwin Diaz');
                     $mail->addAddress($email);
 
@@ -73,7 +80,7 @@ require './vendor/autoload.php';
 
                     </p>';
 
-
+                    //We test if the email has been sent
                     if($mail->send()){
 
                         $emailSent = true;

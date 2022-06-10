@@ -1,6 +1,5 @@
 <?php include "includes/admin_header.php" ?>
-<?php // include "includes/functions.php" ?>
-
+<!-- This page displays all comments -->
 
 
     <div id="wrapper">
@@ -22,7 +21,7 @@
                             <small>Author</small>
                     </h1>
                          <?php 
-
+                            //Check the source attribute in the URL
                             if(isset($_GET['source'])){
 
                                 $source = escape($_GET['source']);
@@ -32,7 +31,7 @@
                             } else {
                                 $source = '';
                             }
-
+                            //Depending on source value, add post, edit post or view all comments
                             switch($source){
                                 case 'add_post';
                                 include "includes/add_post.php";                               
@@ -62,5 +61,5 @@
         </div>
         <!-- /#page-wrapper -->
 
-    
+    <!-- Admin footer -->
 <?php include "includes/admin_footer.php" ?>

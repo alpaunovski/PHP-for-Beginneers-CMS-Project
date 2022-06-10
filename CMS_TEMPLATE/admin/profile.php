@@ -2,15 +2,15 @@
 
 
 <?php 
-
+//Get the username from the session
 if(isset($_SESSION['username'])){
     
     $username = $_SESSION['username'];
-
+    //Select the user from the users table query
     $query = "SELECT * FROM users WHERE username = '{$username}' ";
 
     $select_user_profile_query = mysqli_query($connection, $query);
-
+    //Fetch the user details as an array
     while($row = mysqli_fetch_array($select_user_profile_query)){
 
         $user_id = $row["user_id"];
@@ -29,34 +29,27 @@ if(isset($_SESSION['username'])){
 
 <?php 
 
-
+//If the POST variable edit user is set, we make a query to update the user in the database
 if(isset($_POST['edit_user'])){
-    // $user_id = $_POST["user_id"];
+    
+    //POST values
     $user_firstname = $_POST["user_firstname"];
     $user_lastname = $_POST["user_lastname"];
-    // $user_role = $_POST["user_role"];
-
-    // $post_image = $_FILES["image"]["name"];
-    // $post_image_temp = $_FILES["image"]["tmp_name"];
-
     $username = $_POST["username"];
     $user_email = $_POST["user_email"];
     $user_password = $_POST["user_password"];
-    // $post_date = date("d-m-y");
-    // $post_comment_count = 4;
 
-    // move_uploaded_file($post_image_temp, "../images/$post_image");
-
+    //UPDATE query
     $query = "UPDATE users SET ";
     $query .="user_firstname = '{$user_firstname}', ";
     $query .="user_lastname = '{$user_lastname}', ";
-    // $query .="user_role = '{$user_role}', ";
     $query .="username = '{$username}', ";
     $query .="user_email = '{$user_email}', ";
     $query .="user_password = '{$user_password}' ";
     $query .= "WHERE username = '{$username}' ";
 
     $edit_user_query=mysqli_query($connection, $query);
+    //Function to confirm the query is successful
     confirm($edit_user_query);
 }
 
@@ -83,80 +76,34 @@ if(isset($_POST['edit_user'])){
                          
                     <form action="" method="post" enctype="multipart/form-data">
 
+                    <!-- user first name -->
 <div class="form-group">
     <label for="post_author">First Name</label>
     <input type="text" class="form-control" value="<?php echo $user_firstname ?>" name="user_firstname">
 </div>
-
+<!-- User last name -->
 <div class="form-group">
     <label for="post_status">Last Name</label>
     <input type="text" class="form-control" value="<?php echo $user_lastname ?>" name="user_lastname">
 </div>
 
-
-<!-- <div class="form-group">
-     <label for="post_category_id">Post Category ID</label> -->
-    <!-- <input value="<?php //echo $post_category; ?>" type="text" class="form-control" name="post_category_id"> -->
-
-    <!-- <select name="user_role" id="user_role">
-    <option value="<?php //echo $user_role; ?>"><?php //echo $user_role; ?></option>
-
-    <?php 
-        // if($user_role == 'admin'){
-        //    echo " <option value='subscriber'>subscriber</option>";
-        // } else {
-        //     echo "<option value='admin'>admin</option>";
-        // }
-
-
-    ?> -->
-    
-    
-    
-
-    <?php 
-    
-    // $query = "SELECT * FROM users ";
-    //                                     $select_users = mysqli_query($connection, $query);
-
-    //                                     // confirm($select_users);
-                            
-    //                                     while ($row = mysqli_fetch_assoc($select_users)){
-    //                                         $user_id = $row["user_id"];
-    //                                         $user_role = $row["user_role"];
-    //                                         echo "<tr>";
-
-    //                                         echo "<option value='$user_id'>{$user_role}</option>";
-
-    //                                         }
-
-    ?>
-
-    <!-- </select>
-</div> --> 
-
-
-
-<!-- <div class="form-group">
-    <label for="image">Post Image</label>
-    <input type="file" class="form-control" name="image">
-</div> -->
-
+<!-- Username -->
 <div class="form-group">
     <label for="post_tags">Username</label>
     <input type="text" class="form-control" value="<?php echo $username; ?>" name="username">
 </div>
 
+<!-- Email -->
 <div class="form-group">
     <label for="post_content">Email</label>
 <input type="email" class="form-control" value="<?php echo $user_email; ?>" name="user_email">
 </div>
-
+<!-- Password -->
 <div class="form-group">
     <label for="post_content">Password</label>
 <input autocomplete="off" type="password" class="form-control" name="user_password">
 </div>
-
+<!-- Submit button -->
 <div class="form-group">
     <input class="btn btn-primary" type="submit" name="edit_user" value="Update Profile">
 </div>
@@ -172,5 +119,5 @@ if(isset($_POST['edit_user'])){
         </div>
         <!-- /#page-wrapper -->
 
-    
+    <!-- Admin footer -->
 <?php include "includes/admin_footer.php" ?>

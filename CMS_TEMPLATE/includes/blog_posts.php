@@ -1,3 +1,4 @@
+ <!-- Remnants of the default blog posts that came with the template. Not used anywhere. -->
  <!-- Second Blog Post -->
  <h2>
                     <a href="#">Blog Post Title</a>

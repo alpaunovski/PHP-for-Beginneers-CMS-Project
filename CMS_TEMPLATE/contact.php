@@ -4,7 +4,7 @@
  <?php 
  
  if(isset($_POST['submit'])) {
-
+//Who do I send the contact email to
 $to = "aleksandar@paunovsky.com";
 $subject = escape($_POST['subject']);
 $body = escape($_POST['body']);
@@ -38,6 +38,8 @@ mail($to, $subject, $msg, $header);
     <div class="container">
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
+
+            <!-- The contact form -->
                 <div class="form-wrap">
 
                 <h6 class="text-center">
@@ -47,18 +49,22 @@ mail($to, $subject, $msg, $header);
                     <form role="form" action="contact.php" method="post" id="login-form" autocomplete="off">
 
                          <div class="form-group">
+                            <!-- User email -->
                             <label for="email" class="sr-only">Email</label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email">
                         </div>
+                        <!-- User subject -->
                         <div class="form-group">
                             <label for="subject" class="sr-only">Subject</label>
                             <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject">
                         </div>
-
+                        <!-- User message -->
                          <div class="form-group">
                             <label for="body" class="sr-only">Message</label>
                             <textarea class="form-control" name="body" id="body" cols="50" rows="10"></textarea>
                         </div>
+
+                        <!-- Submit button -->
                 
                         <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Submit">
                     </form>
@@ -73,5 +79,5 @@ mail($to, $subject, $msg, $header);
         <hr>
 
 
-
+<!-- Footer -->
 <?php include "includes/footer.php";?>

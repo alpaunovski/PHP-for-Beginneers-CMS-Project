@@ -3,7 +3,7 @@
 
 <?php 
 
-
+//We check the email of the user and the token before giving them access to the reset form
 if(isset($_GET['email']) && !isset($_GET['token'])) {
 
     redirect('index');
@@ -12,12 +12,8 @@ if(isset($_GET['email']) && !isset($_GET['token'])) {
 $token = $_GET['token'];
 $email = $_GET['email'];
 
-// $email = 'apaunovski@gmail.com';
 
-// $token = '424a50965bbc458063577d0655ae2fd0a5af359087d6a62b6c5bee4ddbb741395276df1b90b9fc4dbbb23e3b1474802d5d43';
-
-
-
+//MySQL STMT prepare query
 if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token = ?')){
     mysqli_stmt_bind_param($stmt, "s", $token);
     mysqli_stmt_execute($stmt);
@@ -25,10 +21,7 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
     mysqli_stmt_fetch($stmt);
     mysqli_stmt_close($stmt);
 
-    // if ($_GET['token'] !== $token || $_GET['email'] !== $email) {
-    //     redirect('index');
-    // }
-
+    //We check if the two new passwords match and we send them to the database
     if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
         if($_POST['password'] === $_POST['confirmPassword']){
@@ -74,18 +67,21 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
                                 <p>You can reset your password here.</p>
                                 <div class="panel-body">
 
-                                    <form id="register-form" role="form" autocomplete="off" class="form" method="post">
+                                <!-- The reset password form -->
 
+                                    <form id="register-form" role="form" autocomplete="off" class="form" method="post">
+                                        <!-- Email field -->
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
                                                 <input id="email" name="email" placeholder="email address" class="form-control"  type="email">
                                             </div>
                                         </div>
+                                        <!-- Submit button -->
                                         <div class="form-group">
                                             <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Reset Password" type="submit">
                                         </div>
-
+                                        <!-- Hidden input for the token -->
                                         <input type="hidden" class="hide" name="token" id="token" value="">
                                     </form>
 

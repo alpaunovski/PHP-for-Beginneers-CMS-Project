@@ -15,9 +15,11 @@
             <div class="col-md-8">
 
             <?php 
-
+            //We check for category attribute link
             if(isset($_GET["category"])){
                 $post_category_id = escape($_GET["category"]);
+
+                //We check the user role. If Admin, we show all posts, if user we only show posts with status published.
 
                 if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
                     $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id ";
@@ -26,7 +28,8 @@
                     $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id AND post_status = 'published' ";
     
                 }
-            
+                
+                //The MySQL query to select the posts
                 $select_all_posts_query = mysqli_query($connection, $query);
 
                 if(mysqli_num_rows($select_all_posts_query) < 1){
@@ -36,7 +39,7 @@
                 } else {
 
                 
-
+                    //We fetch the posts attributes
                 while ($row = mysqli_fetch_assoc($select_all_posts_query)){
                     $post_id = $row["post_id"];
                     $post_title = $row["post_title"];
@@ -84,5 +87,5 @@
 
         <hr>
 
-
+<!-- Footer -->
 <?php include "includes/footer.php" ?>

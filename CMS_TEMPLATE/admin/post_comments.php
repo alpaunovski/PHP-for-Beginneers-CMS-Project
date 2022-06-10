@@ -1,6 +1,5 @@
 <?php include "includes/admin_header.php" ?>
-<?php // include "includes/functions.php" ?>
-
+<!-- This page is responsible for viewing and managing post comments. -->
 
 
     <div id="wrapper">
@@ -21,7 +20,7 @@
                             Welcome to Comments
                             <small>Author</small>
                     </h1>
-
+<!-- Display the comments in a table -->
 <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -40,9 +39,10 @@
                             </thead>
                             <tbody>
                                 <?php 
+                                //Query to get all comments
                                     $query = "SELECT * FROM comments WHERE comment_post_id =". mysqli_real_escape_string($connection, escape($_GET['id'])) . " ";
                                     $select_comments = mysqli_query($connection, $query);
-
+                                    //Get the comment attributes
                                     while ($row = mysqli_fetch_assoc($select_comments)){
                                         
                                         $comment_id = $row["comment_id"];
@@ -53,25 +53,12 @@
                                         $comment_status = $row["comment_status"];
                                         $comment_date = $row["comment_date"];
                                        
+                                        //Display the attributes in the table
 
                                         echo "<tr>";
                                         echo "<td>{$comment_id}</td>";
-                                        echo "<td>{$comment_author}</td>";
-                                        
-                                        echo "<td>{$comment_content}</td>";
-
-                                        // $query = "SELECT * FROM categories WHERE cat_id = {$post_category}";
-                                        // $select_categories_id = mysqli_query($connection, $query);
-                            
-                                        // while ($row = mysqli_fetch_assoc($select_categories_id)){
-                                        //     $cat_id = $row["cat_id"];
-                                        //     $cat_title = $row["cat_title"];
-
-                                        // echo "<td>{$cat_title}</td>";
-                                        // }
-
-
-                                        
+                                        echo "<td>{$comment_author}</td>";                                        
+                                        echo "<td>{$comment_content}</td>";                                        
                                         echo "<td>{$comment_email}</td>";
                                         echo "<td>{$comment_status}</td>";
                                         
@@ -84,6 +71,7 @@
                                         while($row = mysqli_fetch_assoc($select_post_id_query)){
                                             $post_id = $row["post_id"];
                                             $post_title = $row["post_title"];
+                                            //Display links to the corresponding posts
 
                                             echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
                                         }
@@ -91,7 +79,7 @@
                                         
                                         
 
-
+                                        //Approve, unapprove, edit and delete comments
                                         echo "<td><a href='post_comments.php?approve=$comment_id&id=".$_GET['id'] . "'>Approve</a></td>";
                                         echo "<td><a href='post_comments.php?unapprove=$comment_id&id=".$_GET['id'] . "'>Unapprove</a></td>";
                                         echo "<td><a href='post_comments.php?source=edit_post&$comment_id&id=".$_GET['id'] . "'='>Edit</a></td>";
@@ -111,12 +99,11 @@
                         <?php 
                         
 
-
+                        //Approve comments
                         if(isset($_GET["approve"])){
 
                             $the_comment_id = $_GET["approve"];
 
-                            // $query = "UPDATE comments SET comment_status = 'unapprove' WHERE comment_id = {$the_comment_id} ";
 
                             $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$the_comment_id} ";
 
@@ -125,12 +112,10 @@
                         }
 
 
-
+                        //Unapprove comments
                         if(isset($_GET["unapprove"])){
 
                             $the_comment_id = $_GET["unapprove"];
-
-                            // $query = "UPDATE comments SET comment_status = 'unapprove' WHERE comment_id = {$the_comment_id} ";
 
                             $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$the_comment_id} ";
 
@@ -139,7 +124,7 @@
                         }
 
 
-
+                        //Delete comments
                         if(isset($_GET["delete"])){
 
                             $the_comment_id = $_GET["delete"];
@@ -162,5 +147,5 @@
         </div>
         <!-- /#page-wrapper -->
 
-    
+    <!-- Admin footer -->
 <?php include "includes/admin_footer.php" ?>

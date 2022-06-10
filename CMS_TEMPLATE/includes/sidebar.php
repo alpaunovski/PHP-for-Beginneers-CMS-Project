@@ -1,5 +1,5 @@
 <?php 
-
+//The sidebar login form
 if(ifItIsMethod('POST')){
     if(isset($_POST['login'])){
 
@@ -40,21 +40,28 @@ if(ifItIsMethod('POST')){
 
                 <!-- Login Well -->
                 <div class="well">
+
+                <!-- Check if there is a session and the user is logged in -->
                     <?php if(isset($_SESSION['user_role'])): ?>
                         <h4>Logged in as <?php echo $_SESSION['username']; ?> </h4>
 
+                        <!-- Logout button -->
                         <a href='includes/logout.php' class='btn btn-primary'>Logout</a>
 
+                        <!-- If no session then the user needs to log in -->
                     <?php else: ?>
                         <h4>Login</h4>
                     <form method="post">
                     <div class="form-group">
+                        <!-- Username field -->
                         <input name="username" type="text" class="form-control" placeholder="Enter username">
                         
                     </div>
+                    <!-- Password field -->
                     <div class="input-group">
                         <input name="password" type="password" class="form-control" placeholder="Enter password">
                         <span class="input-group-btn">
+                            <!-- Submit button -->
                         <button class="btn btn-primary" name="login" type="submit">Submit</button>
                     </span>
                         

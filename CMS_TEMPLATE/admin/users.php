@@ -1,9 +1,8 @@
 <?php include "includes/admin_header.php" ?>
-<?php // include "includes/functions.php" ?>
-
+<!-- This page is responsible for adding, editing or viewing users in the admin panel. -->
 <?php 
 
-
+//Check if user is admin, or redirect them to the Index, if they are not.
 if(!is_admin($_SESSION['username'])){
     header("Location: index.php");
 }
@@ -30,7 +29,7 @@ if(!is_admin($_SESSION['username'])){
                             <small>Author</small>
                     </h1>
                          <?php 
-
+                            // Check the source attribute in the URL. Depending on value, either add, edit or view all users
                             if(isset($_GET['source'])){
 
                                 $source = escape($_GET['source']);
@@ -70,5 +69,5 @@ if(!is_admin($_SESSION['username'])){
         </div>
         <!-- /#page-wrapper -->
 
-    
+    <!-- Admin footer -->
 <?php include "includes/admin_footer.php" ?>

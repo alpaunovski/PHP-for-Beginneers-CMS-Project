@@ -1,5 +1,5 @@
 <?php
-
+//This is the config for PHPMailer.
 
 class Config {
 

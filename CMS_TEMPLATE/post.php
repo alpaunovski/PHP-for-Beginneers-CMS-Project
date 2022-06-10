@@ -175,15 +175,21 @@ exit();
 <div class="row">
                 <p class="pull-right">
                         <!-- This is targeted by the JavaScript at the end of the file -->
-                        <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like' ?>" href=""><span class="glyphicon <?php echo userLikedThisPost($the_post_id) ? 'glyphicon-thumbs-down' : 'glyphicon-thumbs-up' ?>"
+                        <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like' ?>" href="">
+                        
+                        <!-- Dynamic like / unlike icon -->
+                        <span class="glyphicon <?php echo userLikedThisPost($the_post_id) ? 'glyphicon-thumbs-down' : 'glyphicon-thumbs-up' ?>"
+                        
                         
                         data-toggle="tooltip"
                         data-placement="top"
                         title="<?php echo userLikedThisPost($the_post_id) ? 'I liked this before' : 'Want to like it?' ?>"
                         
                         >
+
+                        <!-- Above we set the tooltip  -->
                     
-                    
+                    <!-- Dynamic like / unlike button text -->
                     </span><?php echo userLikedThisPost($the_post_id) ? ' Unlike' : ' Like' ?> 
                     
                         
@@ -194,6 +200,8 @@ exit();
                     </p>
                 </div>
     <?php } else { ?>
+
+        <!-- We tell the user they need to login to like posts -->
         <div class="row">
                 <p class="pull-right login-to-post">
                         You need to <a href = "/cms/login.php"> Log in </a> to like posts. 
@@ -202,7 +210,7 @@ exit();
 
    <?php }  ?>
 
-
+                <!-- Display total number of post likes -->
                 <div class="row">
                     <p class="pull-right likes">
                         Likes: <?php getPostLikes($the_post_id) ?>
