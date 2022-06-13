@@ -1,6 +1,10 @@
 <?php 
 
+//This is the Add Post file to be included in admin/posts.php
+
+//Check if the Submit button has been pressed.
 if(isset($_POST['create_post'])){
+    //Assign the form fields to variables
     $post_title = escape($_POST["title"]);
     $post_user = escape($_POST["post_user"]);
     $post_category_id = escape($_POST["post_category"]);
@@ -12,11 +16,9 @@ if(isset($_POST['create_post'])){
     $post_tags = escape($_POST["post_tags"]);
     $post_content = escape($_POST["post_content"]);
     $post_date = date("d-m-y");
-    // $post_comment_count = 4;
-
     move_uploaded_file($post_image_temp, "../images/$post_image");
 
-
+    //The Add Post Query
     $query = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
     $query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_user}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', 0, '{$post_status}' ) ";
 
@@ -26,11 +28,13 @@ if(isset($_POST['create_post'])){
 
     $the_post_id = mysqli_insert_id($connection);
 
+    //Display a message that the post has been added to the database. There is a link to View All Posts and a link to add another post.
     echo "<p class='bg-success'>Post added. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php?source=add_post'>Add Another Post</a></p>";
 }
 
 ?>
 
+<!-- The Add Post Form -->
 <form action="" method="post" enctype="multipart/form-data">
 
 <div class="form-group">
@@ -38,10 +42,9 @@ if(isset($_POST['create_post'])){
     <input type="text" class="form-control" name="title">
 </div>
 
+<!-- Category Dropdown -->
 <div class="form-group">
     <label for="post_category">Category: </label>
-    <!-- <label for="post_category_id">Post Category ID</label> -->
-    <!-- <input value="<?php echo $post_category; ?>" type="text" class="form-control" name="post_category_id"> -->
 
     <select name="post_category" id="post_category">
 
@@ -49,8 +52,6 @@ if(isset($_POST['create_post'])){
     
     $query = "SELECT * FROM categories ";
                                         $select_categories = mysqli_query($connection, $query);
-
-                                        // confirm($select_categories);
                             
                                         while ($row = mysqli_fetch_assoc($select_categories)){
                                             $cat_id = $row["cat_id"];
@@ -66,14 +67,8 @@ if(isset($_POST['create_post'])){
     </select>
 </div>
 
-<!-- <div class="form-group">
-    <label for="post_author">Post Author</label>
-    <input type="text" class="form-control" name="author">
-</div> -->
-
+<!-- Post users dropdown -->
 <div class="form-group">
-    <!-- <label for="post_category_id">Post Category ID</label> -->
-    <!-- <input value="<?php //echo $post_category; ?>" type="text" class="form-control" name="post_category_id"> -->
     
     <label for="post_user">Users</label>
     <select name="post_user" id="post_user">
@@ -82,8 +77,6 @@ if(isset($_POST['create_post'])){
     
     $query = "SELECT * FROM users ";
                                         $select_users = mysqli_query($connection, $query);
-
-                                        // confirm($select_categories);
                             
                                         while ($row = mysqli_fetch_assoc($select_users)){
                                             $user_id = $row["user_id"];

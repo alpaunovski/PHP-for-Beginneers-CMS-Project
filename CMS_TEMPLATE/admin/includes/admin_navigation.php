@@ -12,8 +12,7 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
 
-            <!-- <li><a href="">Users Online: <?php // echo users_online()?></a></li> -->
-
+                        <!-- Display the online users dynamically -->
                         <li><a href="">Users Online: <span class="usersonline"></span></a></li>
 
 
@@ -24,6 +23,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
                     
                     <?php 
+
+                    //Display the username of the logged in person
                     
                     if(isset($_SESSION['username'])){
 
@@ -56,6 +57,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a class="navbar-brand" href="../admin"><i class="fa fa-fw fa-dashboard"></i> My Data</a>
+                    </li>
+
                     <li>
                         <a class="navbar-brand" href="../admin"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>

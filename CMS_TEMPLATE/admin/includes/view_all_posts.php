@@ -1,8 +1,11 @@
                     <?php 
+                    //Include the Delete user modal floating confirmation box.
                     include("delete_modal.php");
-
+                    
+                    //Bellow we check if the post checkbox has been ticked.
                     if(isset($_POST['checkBoxArray'])){
                         foreach($_POST['checkBoxArray'] as $postValueId ){
+                            //We check the GET request for an option. Options are Delete, Draft, Publish and Clone.
                             $bulk_options = $_POST['bulk_options'];
 
                             switch($bulk_options) {
@@ -26,7 +29,7 @@
                                     $update_to_delete_status = mysqli_query($connection, $query);
 
                                     break;
-
+                                //Clone case
                                 case 'clone':
 
                                     $query = "SELECT * FROM posts WHERE post_id = '{$postValueId}' ";
@@ -55,14 +58,14 @@
                                         die("QUERY FAILED" . mysqli_error($connection));
                                     }
 
-                                    break;
+                                    break; //End clone case
                             }
                         }
                     }
 
 
                     ?>
-                    
+                    <!-- Dropdown with bulk post options -->
                     <form action="" method="post">
                         <table class="table table-bordered table-hover">
                             <div id="bulkOptionsContainer" class="col-xs-4">
@@ -79,7 +82,7 @@
                             </div>
 
                             <div class="col-xs-4">
-
+                            <!-- The Apply button -->
                             <input type="submit" name="submit" class="btn btn-success" value="Apply">
                             <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
                             </div>
@@ -103,14 +106,15 @@
                             </thead>
                             <tbody>
                                 <?php 
-                                    // $query = "SELECT * FROM posts ";
-
+                                    //JOIN query to display posts and categories
                                     $query = "SELECT posts.post_id, posts.post_author, posts.post_user, posts.post_category_id, posts.post_status, posts.post_title, posts.post_image, ";
                                     $query .= "posts.post_tags, posts.post_comment_count, posts.post_date, posts.post_views_count, categories.cat_id, categories.cat_title FROM posts ";
                                     $query .= "LEFT JOIN categories ON posts.post_category_id = categories.cat_id ORDER BY posts.post_id DESC";
                                     $select_posts = mysqli_query($connection, $query);
 
                                     while ($row = mysqli_fetch_assoc($select_posts)){
+
+                                        //We get the post properties as normal and assign them to variables
                                         
                                         $post_id = $row["post_id"];
                                         $post_author=$row["post_author"];
@@ -125,7 +129,8 @@
                                         $post_views_count = $row["post_views_count"];
                                         $cat_title = $row['cat_title'];
                                         $cat_id = $row['cat_id'];
-
+                                        
+                                        //Display the table cells
                                         echo "<tr>";
 
                                         ?>
@@ -146,17 +151,7 @@
 
 
                                         echo "<td>{$post_title}</td>";
-
-                                        // $query = "SELECT * FROM categories WHERE cat_id = {$post_category}";
-                                        // $select_categories_id = mysqli_query($connection, $query);
-                            
-                                        // while ($row = mysqli_fetch_assoc($select_categories_id)){
-                                        //     $cat_id = $row["cat_id"];
-                                        //     $cat_title = $row["cat_title"];
-
                                         echo "<td>{$cat_title}</td>";
-                                        // }
-
 
                                         echo "<td>{$post_status}</td>";
                                         
@@ -167,19 +162,20 @@
                                         $send_comment_query = mysqli_query($connection, $query);
 
                                         $row = mysqli_fetch_array($send_comment_query);
-                                        //$comment_id = $row['comment_id'];
                                         $count_comments = mysqli_num_rows($send_comment_query);
 
                                         echo "<td><a href='post_comments.php?id=$post_id'>{$count_comments}</a></td>";
 
 
                                         echo "<td>{$post_date}</td>";
+                                        //View post button
                                         echo "<td><a class='btn btn-primary' href='../post.php?p_id=$post_id'>View Post</a></td>";
+                                        //Edit post button
                                         echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&p_id=$post_id'>Edit</a></td>";
 
 
                                         ?>
-
+                                            <!-- The delete post button -->
                                             <form action="" method="post">
                                                 <input type="hidden" name="post_id" value="<?php echo $post_id ?>">
 
@@ -190,24 +186,25 @@
                                             </form>
 
                                         <?php 
-                                        // echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
-
+                                        //Reset the post view count
                                         echo "<td><a href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
                                         
 
 
-                                        echo "</tr>";
+                                        echo "</tr>"; //End post table cells
                                         
                                     }
 
                                 ?>
-                                
+                                <!-- End posts table body -->
                             </tbody>
+                            <!-- End posts table -->
                         </table>
+                        <!-- End the bulk form -->
                     </form>
 
                         <?php 
-                        
+                        //Delete post button query
                         if(isset($_POST["delete"])){
 
                             $the_post_id = escape($_POST["post_id"]);
@@ -217,7 +214,7 @@
                             $delete_query = mysqli_query($connection, $query);
                             header("Location: posts.php");
                         }
-
+                        //Reset post view count query
                         if(isset($_GET["reset"])){
 
                             $the_post_id = escape($_GET["reset"]);
@@ -229,7 +226,7 @@
                         }
                         
                         ?>
-
+                        <!-- Delete post modal confirmation dialog box ajax script -->
                         <script>
                             $(document).ready(function(){
                                 $(".delete_link").on('click', function(){

@@ -1,14 +1,16 @@
 <?php 
+//This file is responsible for editing a post.
 
+//Get the post id from the url
 if(isset($_GET["p_id"])){
    $the_post_id = $p_id = escape($_GET["p_id"]);
 }
-
+//Select the post from the database
 $query = "SELECT * FROM posts WHERE post_id=$the_post_id";
 $select_posts_by_id = mysqli_query($connection, $query);
-
+//Fetch an associative array from the query
 while ($row = mysqli_fetch_assoc($select_posts_by_id)){
-    
+    //Assign the different fields to variables
     $post_id = $row["post_id"];
     $post_user=$row["post_user"];
     $post_category = $row["post_category_id"];
@@ -21,7 +23,7 @@ while ($row = mysqli_fetch_assoc($select_posts_by_id)){
     $post_content = $row["post_content"];
 
 }
-
+//If the submit button is pressed, assign the fields of the form to variables and create a query.
 if(isset($_POST["update_post"])){
     $post_user= escape($_POST["post_user"]);
     $post_title= escape($_POST["title"]);
@@ -34,6 +36,7 @@ if(isset($_POST["update_post"])){
 
     move_uploaded_file($post_image_temp, "../images/$post_image");
 
+    //Select the old post image, if we have not uploaded a new one.
     if(empty($post_image)){
         $query="SELECT * FROM posts WHERE post_id=$the_post_id ";
         $select_image = mysqli_query($connection, $query);
@@ -42,7 +45,7 @@ if(isset($_POST["update_post"])){
             $post_image = $row['post_image'];
         }
     }
-
+    //Query to update the post in the database.
     $query = "UPDATE posts SET ";
     $query .="post_title = '{$post_title}', ";
     $query .="post_category_id = '{$post_category_id}', ";
@@ -56,12 +59,12 @@ if(isset($_POST["update_post"])){
 
     $update_post=mysqli_query($connection, $query);
 
-
+    //Display a message that the post has been successfully updated with links to View Posts or Edit Post.
     echo "<p class='bg-success'>Post updated. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit Another Post</a></p>";
 }
 
 ?>
-
+<!-- The form to edit the post's properties -->
 <form action="" method="post" enctype="multipart/form-data">
 
 <div class="form-group">
@@ -71,8 +74,6 @@ if(isset($_POST["update_post"])){
 
 <div class="form-group">
 <label for="post_category">Category</label>
-    <!-- <label for="post_category_id">Post Category ID</label> -->
-    <!-- <input value="<?php echo $post_category; ?>" type="text" class="form-control" name="post_category_id"> -->
 
     <select name="post_category" id="post_category">
 
@@ -80,8 +81,6 @@ if(isset($_POST["update_post"])){
     
     $query = "SELECT * FROM categories ";
                                         $select_categories = mysqli_query($connection, $query);
-
-                                        // confirm($select_categories);
                             
                                         while ($row = mysqli_fetch_assoc($select_categories)){
                                             $cat_id = $row["cat_id"];
@@ -97,15 +96,8 @@ if(isset($_POST["update_post"])){
     </select>
 </div>
 
-<!-- <div class="form-group">
-    <label for="post_user">Post Author</label>
-    <input value="<?php // echo $post_user; ?>" type="text" class="form-control" name="author">
-</div> -->
-
 <div class="form-group">
-    <!-- <label for="post_category_id">Post Category ID</label> -->
-    <!-- <input value="<?php //echo $post_category; ?>" type="text" class="form-control" name="post_category_id"> -->
-    
+    <!-- Dropdown to select the post user -->
     <label for="post_user">Users</label>
     <select name="post_user" id="post_user">
     <?php echo "<option value='$post_user'>$post_user</option>"; ?>
@@ -114,8 +106,6 @@ if(isset($_POST["update_post"])){
     
     $query = "SELECT * FROM users ";
     $select_users = mysqli_query($connection, $query);
-
-    // confirm($select_categories);
 
     while ($row = mysqli_fetch_assoc($select_users)){
         $user_id = $row["user_id"];
@@ -130,7 +120,7 @@ if(isset($_POST["update_post"])){
 
     </select>
 </div>
-
+<!-- Dropdown to select the post status -->
 <div class="form-group">
     <select name="post_status" id="">
         <option value='<?php echo $post_status; ?>'><?php echo $post_status; ?></option>

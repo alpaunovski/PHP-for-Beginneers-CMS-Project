@@ -1,3 +1,4 @@
+<!-- Edit category form -->
 <form action="" method="post">
                                 <div class="form-group">
                                     <label for="cat_title">Edit Category</label>
