@@ -170,6 +170,25 @@ function recordCount ($table){
 
     return $result;
 }
+
+//Count records
+function count_records($result){
+    return mysqli_num_rows($result);
+}
+
+
+//Count how many posts in table for a user
+function get_all_user_posts (){
+    global $connection;
+    $query = "SELECT * FROM posts WHERE post_user ='" .$_SESSION['username'] ."'" ;
+    $select_all_posts = mysqli_query($connection, $query);
+
+    $result = mysqli_num_rows($select_all_posts);
+
+    confirm($result);
+
+    return $result;
+}
 //Check the status of posts and users
 function checkStatus($table, $column_name, $status){
     global $connection;

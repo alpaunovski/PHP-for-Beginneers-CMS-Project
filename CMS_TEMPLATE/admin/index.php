@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-xs-9 text-right">
                     <!-- Posts square -->
-                    <div class='huge'><?php echo $post_counts = recordCount('posts'); ?></div>
+                    <div class='huge'><?php echo $post_counts = get_all_user_posts() ?></div>
                     
                   
                         <div>Posts</div>
