@@ -60,10 +60,12 @@
                     <li>
                         <a class="navbar-brand" href="../admin"><i class="fa fa-fw fa-dashboard"></i> My Data</a>
                     </li>
-
+                    <?php if(is_admin()): ?>)
                     <li>
-                        <a class="navbar-brand" href="../admin"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a class="navbar-brand" href="dashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
+
+                    <?php endif; ?>
                    
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i class="fa fa-fw fa-arrows-v"></i> Posts <i class="fa fa-fw fa-caret-down"></i></a>

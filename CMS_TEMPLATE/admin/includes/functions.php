@@ -2,6 +2,7 @@
 
 //Database helper functions
 
+
 //Redirect user to a specified location.
 function redirect ($location){
 
@@ -27,6 +28,7 @@ function isLoggedIn(){
 
     return false;
 }
+
 //Check if user is logged in and redirect
 function checkIfUserIsLoggedInAndRedirect($redirectLocation=null){
     if (isLoggedIn()) {
@@ -176,33 +178,7 @@ function checkStatus($table, $column_name, $status){
     return mysqli_num_rows($result);
 }
 
-//Check if user is admin
-function is_admin($username) {
 
-    global $connection; 
-
-    if(isLoggedIn()){
-        $query = "SELECT user_role FROM users WHERE username = '$username'";
-        $result = mysqli_query($connection, $query);
-        confirm($result);
-    
-        $row = mysqli_fetch_array($result);
-    
-    
-        if($row['user_role'] == 'admin'){
-    
-            return true;
-    
-        }else {
-    
-    
-            return false;
-        }
-    }
-
-
-
-}
 
 //Check if username exists
 function username_exists($username){
@@ -294,7 +270,7 @@ function login_user($username, $password)
 
 
          if (password_verify($password,$db_user_password)) {
-
+             $_SESSION['user_id'] = $db_user_id;
              $_SESSION['username'] = $db_username;
              $_SESSION['firstname'] = $db_user_firstname;
              $_SESSION['lastname'] = $db_user_lastname;
@@ -329,6 +305,38 @@ function login_user($username, $password)
      confirm($query);
      return mysqli_query($connection, $query);
  }
+//Fetches the records from the dabaase as array
+ function fetchRecords($result){
+    return mysqli_fetch_array($result);
+ }
+
+ //Echoes the user's username
+ function get_user_name(){
+    return isset($_SESSION['username']) ? $_SESSION['username'] : null;
+ }
+
+ //Check if user is admin
+function is_admin() {
+
+    if(isLoggedIn()){
+        $result = query("SELECT user_role FROM users WHERE user_id =" .$_SESSION['user_id']."");
+        $row = fetchRecords($result);
+        if($row['user_role'] == 'admin'){
+    
+            return true;
+    
+        }else {
+    
+    
+            return false;
+        }
+    }
+
+    return false;
+
+
+
+}
 
  //Return the ID of the logged in user
 function loggedInUserId(){
