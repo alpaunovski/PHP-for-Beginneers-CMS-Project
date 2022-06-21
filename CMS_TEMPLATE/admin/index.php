@@ -100,9 +100,11 @@ $category_count = count_records(get_all_user_categories());
                 
                 $post_published_count = count_records(get_all_user_published_posts());
 
-                $post_draft_count = checkStatus('posts', 'post_status', 'draft');
+                $post_draft_count = count_records(get_all_user_draft_posts());
 
-                $unapproved_comment_count = checkStatus('comments', 'comment_status', 'unapproved');
+                $unapproved_comment_count = count_records(get_all_user_unapporoved_posts_comments());
+
+                $approved_comment_count = count_records(get_all_user_approved_posts_comments());
 
                 $subscriber_count = checkStatus('users', 'user_role', 'subscriber');
                 
@@ -122,12 +124,12 @@ $category_count = count_records(get_all_user_categories());
 
           <?php 
           
-          $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments'];
+          $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Approved Comments'];
 
-          $element_count = [$post_counts, $post_published_count, $post_draft_count, $comment_counts, $unapproved_comment_count];
+          $element_count = [$post_counts, $post_published_count, $post_draft_count, $comment_counts, $unapproved_comment_count, $approved_comment_count];
           
           //Echo the array into the script
-          for($i=0; $i < 5; $i++){
+          for($i=0; $i < 6; $i++){
               echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
           }
           ?>

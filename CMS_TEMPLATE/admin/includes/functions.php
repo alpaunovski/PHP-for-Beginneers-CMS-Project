@@ -219,6 +219,13 @@ function get_all_user_draft_posts(){
     return query("SELECT * FROM posts WHERE post_user ='" .$_SESSION['username'] ."' AND post_status='draft'") ;
 }
 
+function get_all_user_approved_posts_comments(){
+    return query("SELECT * FROM posts INNER JOIN comments on posts.post_id = comments.comment_post_id WHERE post_user ='" .$_SESSION['username'] ."' AND comment_status='unapproved'");
+}
+
+function get_all_user_unapporoved_posts_comments() {
+    return query("SELECT * FROM posts INNER JOIN comments on posts.post_id = comments.comment_post_id WHERE post_user ='" .$_SESSION['username'] ."' AND comment_status='approved'");
+}
 //Check if username exists
 function username_exists($username){
     global $connection;
