@@ -1,8 +1,27 @@
 <?php  include "includes/db.php"; ?>
-<?php //Header.php already includes functions.php ?>
 <?php  include "includes/header.php"; ?>
 
  <?php 
+
+//Language stuff
+
+if(isset($_GET['lang'])){
+    $_SESSION['lang'] = $_GET['lang'];
+
+    if(isset($_SESSION['lang']) && $_SESSION['lang'] == $_GET['lang']) {
+
+        echo "<script type='text/javascript'>location.reload();</script>";
+
+    }
+
+    if(isset($_SESSION['lang'])){
+        include "includes/languages" . $_SESSION['lang'] . ".php";
+    } else {
+        include "includes/languages/en.php";
+    }
+
+}
+
  //Submit button 
  if($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -77,7 +96,14 @@
  
     <!-- Page Content -->
     <div class="container">
-    
+    <form class="navbar-form navbar-right" method="get" action="" id="language_form">
+        <div class="form-group">
+            <select name="lang" class="form-control" onchange="changeLanguage()" >
+                <option value="en">English</option>
+                <option value="bg">Bulgarian</option>
+            </select>
+        </div>
+    </form>
 <section id="login">
     <div class="container">
         <div class="row">
@@ -116,7 +142,7 @@
 
                         <!-- Submit button -->
                 
-                        <input type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                        <input type="submit" name="register" id="btn-login" class="btn btn-primary btn-lg btn-block" value="Register">
                     </form>
                  
                 </div>
@@ -128,6 +154,12 @@
 
         <hr>
 
+<script>
+    function changeLanguage(){
 
+        document.getElementById('language_form').submit();
+
+    }
+</script>
 
 <?php include "includes/footer.php";?>
