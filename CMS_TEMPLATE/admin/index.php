@@ -98,7 +98,7 @@ $category_count = count_records(get_all_user_categories());
 
                 // Get counts of posts, users and comments
                 
-                $post_published_count = checkStatus('posts', 'post_status', 'published');
+                $post_published_count = count_records(get_all_user_published_posts());
 
                 $post_draft_count = checkStatus('posts', 'post_status', 'draft');
 

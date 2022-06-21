@@ -209,7 +209,15 @@ function checkStatus($table, $column_name, $status){
     return mysqli_num_rows($result);
 }
 
+//Get all users published posts
+function get_all_user_published_posts(){
+    return query("SELECT * FROM posts WHERE post_user ='" .$_SESSION['username'] ."' AND post_status='published'") ;
+}
 
+//Get all users draft posts
+function get_all_user_draft_posts(){
+    return query("SELECT * FROM posts WHERE post_user ='" .$_SESSION['username'] ."' AND post_status='draft'") ;
+}
 
 //Check if username exists
 function username_exists($username){
