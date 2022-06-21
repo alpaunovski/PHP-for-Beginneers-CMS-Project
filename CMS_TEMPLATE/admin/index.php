@@ -4,6 +4,7 @@
 
 $post_counts = get_all_user_posts();
 $comment_counts = count_records(get_all_posts_user_comments());
+$category_count = count_records(get_all_user_categories());
 
 ?>
     <div id="wrapper">
@@ -37,7 +38,7 @@ $comment_counts = count_records(get_all_posts_user_comments());
                 <!-- /.row -->
                 <!-- Google chart to display posts, users and other data -->
 <div class="row">
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-6 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -63,7 +64,7 @@ $comment_counts = count_records(get_all_posts_user_comments());
         </div>
     </div>
     <!-- Comments square -->
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-6 col-md-6">
         <div class="panel panel-green">
             <div class="panel-heading">
                 <div class="row">
@@ -88,55 +89,8 @@ $comment_counts = count_records(get_all_posts_user_comments());
         </div>
     </div>
     <!-- User count square -->
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-user fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                    
-                    <div class='huge'><?php echo $users_counts = recordCount('users'); ?></div>
 
-                        <div> Users</div>
-                    </div>
-                </div>
-            </div>
-            <a href="users.php">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
     <!-- Category count square -->
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-red">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-list fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                    
-                    <div class='huge'><?php echo $categories_counts = recordCount('categories'); ?></div>
-                    
-                         <div>Categories</div>
-                    </div>
-                </div>
-            </div>
-            <a href="categories.php">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
 </div>
                 <!-- /.row -->
 
@@ -168,12 +122,12 @@ $comment_counts = count_records(get_all_posts_user_comments());
 
           <?php 
           
-          $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
+          $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments'];
 
-          $element_count = [$post_counts, $post_published_count, $post_draft_count, $comment_counts, $unapproved_comment_count, $users_counts, $subscriber_count, $categories_counts];
+          $element_count = [$post_counts, $post_published_count, $post_draft_count, $comment_counts, $unapproved_comment_count];
           
           //Echo the array into the script
-          for($i=0; $i < 8; $i++){
+          for($i=0; $i < 5; $i++){
               echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
           }
           ?>
