@@ -189,6 +189,13 @@ function get_all_user_posts (){
 
     return $result;
 }
+
+//Get all comments for a user
+function get_all_posts_user_comments() {
+
+    return $result = query("SELECT * FROM posts INNER JOIN comments ON posts.post_id = comments.comment_post_id WHERE post_user='" .$_SESSION['username'] ."'");
+
+}
 //Check the status of posts and users
 function checkStatus($table, $column_name, $status){
     global $connection;

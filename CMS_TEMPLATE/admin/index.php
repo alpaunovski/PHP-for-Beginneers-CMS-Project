@@ -1,6 +1,11 @@
 <?php include "includes/admin_header.php" ?>
 
+<?php 
 
+$post_counts = get_all_user_posts();
+$comment_counts = count_records(get_all_posts_user_comments());
+
+?>
     <div id="wrapper">
         <!-- Navigation -->
 
@@ -41,7 +46,7 @@
                     </div>
                     <div class="col-xs-9 text-right">
                     <!-- Posts square -->
-                    <div class='huge'><?php echo $post_counts = get_all_user_posts() ?></div>
+                    <div class='huge'><?php echo $post_counts; ?></div>
                     
                   
                         <div>Posts</div>
@@ -67,7 +72,7 @@
                     </div>
                     <div class="col-xs-9 text-right">
                     
-                    <div class='huge'><?php echo $comment_counts = recordCount('comments'); ?></div>
+                    <div class='huge'><?php echo $comment_counts; ?></div>
                     
                       <div>Comments</div>
                     </div>
